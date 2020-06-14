@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>BotBase</id>
+    <version>1.0.0</version>
+    <authors>CloudTheWolf</authors>
+    <owners>CloudTheWolf</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Base Wrapper For .NET Core Disocord Bot using DSharpPlus</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Microsoft.Extensions.Logging.Console" version="1.1.0" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus" version="4.0.0-nightly-00703" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.CommandsNext" version="4.0.0-nightly-00703" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.Interactivity" version="4.0.0-nightly-00703" exclude="Build,Analyzers" />
+        <dependency id="BotLogger" version="1.0.0" />
+        <dependency id="BotCore" version="1.0.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="content\Properties\launchSettings.json" target="content\Properties\launchSettings.json" />
+    <file src="content\appsettings.Development.json" target="content\appsettings.Development.json" />
+    <file src="content\appsettings.json" target="content\appsettings.json" />
+    <file src="content\config.json.example" target="content\config.json.example" />
+    <file src="lib\netcoreapp3.1\BotBase.dll" target="lib\netcoreapp3.1\BotBase.dll" />
+    <file src="lib\netcoreapp3.1\BotBase.exe" target="lib\netcoreapp3.1\BotBase.exe" />
+  </files>
+</package>

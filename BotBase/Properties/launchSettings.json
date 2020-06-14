@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "BotBase": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\CloudTheWolf\\source\\repos\\BotBase\\BotBase\\bin\\Debug\\netcoreapp3.1\\win10-x64\\BotBase.exe",
+      "workingDirectory": "C:\\Users\\CloudTheWolf\\source\\repos\\BotBase\\BotBase\\bin\\Debug\\netcoreapp3.1\\win10-x64",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
