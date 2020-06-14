@@ -1,9 +1,6 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using BotCore;
-using BotLogger;
+﻿using BotCore;
+using BotShared.Interfaces;
 using DSharpPlus;
-using DSharpPlus.CommandsNext;
 using Example.Module.Commands;
 
 
@@ -11,27 +8,12 @@ namespace Example.Module
 {
     public class Example : IPlugin
     {
+        public string Name => "Example Plugin";
+        public string Description => "An example to test that the plugin loader is working!";
+        public int Version => 1;
 
         private static DiscordConfiguration _discordConfiguration;
         private dynamic _myConfig;
-
-
-        public string Name
-        {
-            get
-            {
-                return "Example";
-            }
-        }
-
-        public string Explanation
-        {
-            get
-            {
-                return "An Example Plugin";
-            }
-        }
-
 
         public void Start(DiscordConfiguration discordConfiguration, dynamic applicationConfig)
         {

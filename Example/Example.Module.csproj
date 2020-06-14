@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BotCore\BotCore.csproj" />
+    <ProjectReference Include="..\BotShared\BotShared.csproj" />
   </ItemGroup>
 
 </Project>
