@@ -15,10 +15,10 @@ Add the following to enable MySql Support
 ```
 	"sql": 
 		{
-			"host": "40.120.52.155",
-			"user": "bots_playroom",
-			"pass": "IjCCBv03p6TowegU",
-			"name": "bots_soProfile"
+			"host": "127.0.0.1",
+			"user": "bots_user",
+			"pass": "bots_password",
+			"name": "bots_database"
 		}
 ```
 
