@@ -1,44 +1,31 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using BotCore;
-using BotLogger;
+﻿using BotShared.Interfaces;
 using DSharpPlus;
-using DSharpPlus.CommandsNext;
 using Example.Module.Commands;
+using Microsoft.Extensions.Logging;
+using BotLogger;
 
 
 namespace Example.Module
 {
     public class Example : IPlugin
     {
+        public string Name => "Example Plugin";
+        public string Description => "An example to test that the plugin loader is working!";
+        public int Version => 1;
 
+        public static ILogger<Logger> Logger;
         private static DiscordConfiguration _discordConfiguration;
         private dynamic _myConfig;
 
-
-        public string Name
+        public void InitPlugin(IBot bot, ILogger<Logger> logger, DiscordConfiguration discordConfiguration, dynamic applicationConfig)
         {
-            get
-            {
-                return "Example";
-            }
-        }
-
-        public string Explanation
-        {
-            get
-            {
-                return "An Example Plugin";
-            }
-        }
-
-
-        public void Start(DiscordConfiguration discordConfiguration, dynamic applicationConfig)
-        {
+            Logger = logger;
             _myConfig = applicationConfig;
             _discordConfiguration = discordConfiguration;
-           Bot.Commands.RegisterCommands<ExampleCommands>();
+            logger.LogInformation($"{Name}: Loaded successfully!");
+
+            bot.Commands.RegisterCommands<ExampleCommands>();
+            logger.LogInformation($"{Name}: Registered {nameof(ExampleCommands)}!");
         }
     }
-
 }

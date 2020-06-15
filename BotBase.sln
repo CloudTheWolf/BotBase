@@ -4,11 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotCore", "BotCore\BotCore.csproj", "{2103293B-8A01-496B-B1EB-3CD3DD9C31F7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C9E65E9B-9F56-488D-A936-99D5AAB22853} = {C9E65E9B-9F56-488D-A936-99D5AAB22853}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotLogger", "BotLogger\BotLogger.csproj", "{C9E65E9B-9F56-488D-A936-99D5AAB22853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Local.BotLogger", "BotLogger\Local.BotLogger.csproj", "{C9E65E9B-9F56-488D-A936-99D5AAB22853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotData", "BotData\BotData.csproj", "{9719F415-00AB-416F-A150-6FBEE1F8E2F7}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -18,6 +15,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotBase", "BotBase\BotBase.csproj", "{DA902753-D168-4AF4-9527-30588CB78561}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Module", "Example\Example.Module.csproj", "{78CA8608-4F88-4A62-8966-0E34F5B2A4FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotShared", "BotShared\BotShared.csproj", "{77C91399-8C64-474F-B80C-CB9946E99857}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +88,18 @@ Global
 		{78CA8608-4F88-4A62-8966-0E34F5B2A4FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78CA8608-4F88-4A62-8966-0E34F5B2A4FF}.Release|x86.ActiveCfg = Release|Any CPU
 		{78CA8608-4F88-4A62-8966-0E34F5B2A4FF}.Release|x86.Build.0 = Release|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Debug|x86.Build.0 = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.linux-x86|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.linux-x86|Any CPU.Build.0 = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.linux-x86|x86.ActiveCfg = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.linux-x86|x86.Build.0 = Debug|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|x86.ActiveCfg = Release|Any CPU
+		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

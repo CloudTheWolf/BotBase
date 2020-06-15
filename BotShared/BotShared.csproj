@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BotLogger" Version="1.0.0" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BotLogger\Local.BotLogger.csproj" />
+  </ItemGroup>
+
+</Project>

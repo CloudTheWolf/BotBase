@@ -1,53 +1,73 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Enumeration;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BotCore.CommandSet;
-using Microsoft.Extensions.Logging;
+using BotCore.Services;
 using BotLogger;
+using BotShared.Interfaces;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using LogLevel = DSharpPlus.LogLevel;
 
 namespace BotCore
 {
-    public class Bot
+    public class Bot : IBot
     {
         private bool loadBase = true;
         public static DiscordClient Client { get; set; }
-        public static CommandsNextExtension Commands { get; set; }
+        public CommandsNextExtension Commands { get; set; }
         private static DiscordConfiguration _config;
         private static dynamic _myConfig;
-        private static PluginLoader pluginLoader = new PluginLoader();
+        private static readonly PluginLoader PluginLoader = new PluginLoader();
 
         public static ILogger<Logger> Logger;
 
 
-
-        public static async Task RunAsync(CancellationToken stoppingToken, ILogger<Logger> logger)
+        public async Task RunAsync(CancellationToken stoppingToken, ILogger<Logger> logger)
         {
             Logger = logger;
             Logger.LogInformation("Bot Starting!");
-            var json = String.Empty;
-            using (var fs = File.OpenRead("config.json"))
-            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                json = await sr.ReadToEndAsync().ConfigureAwait(false);
-
-            _myConfig = JObject.Parse(json);
+            await LoadConfig();
             SetDiscordConfig();
             CreateDiscordClient();
-
             CreateClientCommandConfiguration();
+            InitPlugins();
+
             await Client.ConnectAsync();
             await Task.Delay(-1, stoppingToken);
         }
 
-        private static void CreateClientCommandConfiguration()
+        private void InitPlugins()
+        {
+            PluginLoader.LoadPlugins();
+
+            foreach (var plugin in PluginLoader.Plugins)
+            {
+                plugin.InitPlugin(this, Logger, _config, _myConfig);
+            }
+        }
+
+        private static async Task LoadConfig()
+        {
+            const string configPath = "config.json";
+
+            string json;
+            using (var fs = File.OpenRead(configPath))
+            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
+            {
+                json = await sr.ReadToEndAsync().ConfigureAwait(false);
+            }
+
+            _myConfig = JObject.Parse(json);
+        }
+
+        private void CreateClientCommandConfiguration()
         {
             var commandsConfig = new CommandsNextConfiguration
             {
@@ -60,13 +80,9 @@ namespace BotCore
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<BaseCommands>();
-            foreach (KeyValuePair<string, Command> command in Commands.RegisteredCommands)
-            {
+            foreach (var command in Commands.RegisteredCommands)
                 Console.WriteLine($"{command.Key} = {command.Value.Description}");
-            }
         }
-
-
 
         private static void CreateDiscordClient()
         {
@@ -77,7 +93,6 @@ namespace BotCore
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(1)
-
             });
         }
 
@@ -88,7 +103,7 @@ namespace BotCore
                 Token = _myConfig["token"].ToString(),
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
-                LogLevel = DSharpPlus.LogLevel.Debug,
+                LogLevel = LogLevel.Debug,
                 UseInternalLogHandler = true
             };
         }
@@ -98,6 +113,5 @@ namespace BotCore
             Logger.LogInformation($"Bot Ready With Prefix [{_myConfig["prefix"]}]");
             return Task.CompletedTask;
         }
-
     }
 }

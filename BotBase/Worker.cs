@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BotCore;
@@ -25,7 +23,8 @@ namespace BotBase
             while (!stoppingToken.IsCancellationRequested)
             {
                 Logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Bot.RunAsync(stoppingToken, Logger);
+                var bot = new Bot();
+                await bot.RunAsync(stoppingToken, Logger);
                 await Task.Delay(-1, stoppingToken);
             }
         }
