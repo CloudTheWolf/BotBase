@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using BotCore.CommandSet;
 using BotCore.Services;
 using BotLogger;
 using BotShared.Interfaces;
@@ -78,10 +77,6 @@ namespace BotCore
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
-
-            Commands.RegisterCommands<BaseCommands>();
-            foreach (var command in Commands.RegisteredCommands)
-                Console.WriteLine($"{command.Key} = {command.Value.Description}");
         }
 
         private static void CreateDiscordClient()
