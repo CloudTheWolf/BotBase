@@ -1,4 +1,6 @@
-﻿using DSharpPlus;
+﻿using BotLogger;
+using DSharpPlus;
+using Microsoft.Extensions.Logging;
 
 namespace BotShared.Interfaces
 {
@@ -7,6 +9,6 @@ namespace BotShared.Interfaces
         string Name { get; }
         string Description { get; }
         int Version { get; }
-        void Start(DiscordConfiguration discordConfiguration, dynamic applicationConfig);
+        void InitPlugin(IBot bot, ILogger<Logger> logger, DiscordConfiguration discordConfiguration, dynamic applicationConfig);
     }
 }
