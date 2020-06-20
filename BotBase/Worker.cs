@@ -26,6 +26,7 @@ namespace BotBase
                 var bot = new Bot();
                 await bot.RunAsync(stoppingToken, Logger);
                 await Task.Delay(-1, stoppingToken);
+				
             }
         }
     }
