@@ -13,3 +13,5 @@ jobs:
 
      - name: Verify
        uses: vchain-us/verify-action@master
+       with:
+         signerID: 9e5f5f79-cb69-4d30-9b77-1feced3892df
