@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Local.BotLogger
+namespace BotLogger
 {
     public class Logger
     {
