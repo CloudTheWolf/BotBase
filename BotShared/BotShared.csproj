@@ -2,17 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>ctw.BotShared</PackageId>
+    <Authors>Michael Howard; PairedPrototype</Authors>
+    <Company>CloudTheWolf Ltd</Company>
+    <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
+    <Description>Shared Interfaces For BotBase Application</Description>
+    <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BotLogger" Version="1.0.0" />
+    <PackageReference Include="ctw.BotLogger" Version="1.0.0" />
     <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BotLogger\BotLogger.csproj" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

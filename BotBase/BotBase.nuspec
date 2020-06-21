@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>BotBase</id>
+    <id>ctw.BotBase</id>
     <version>1.0.1</version>
     <authors>CloudTheWolf</authors>
     <owners>CloudTheWolf</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Base Wrapper For .NET Core Disocord Bot using DSharpPlus</description>
+    <description>Base Wrapper For .NET Core Discord Bot using DSharpPlus</description>
     <dependencies>
       <group targetFramework=".NETCoreApp3.1">
         <dependency id="Microsoft.Extensions.Logging.Console" version="1.1.0" exclude="Build,Analyzers" />

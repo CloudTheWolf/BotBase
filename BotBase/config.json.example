@@ -1,9 +1,4 @@
 ﻿{
 	"token": "{{DISCORD_TOKEN}}",
-	"prefix": "!",
-	"excludeBaseCommands": false,
-	"modules":
-  {
-		"module": "Example"
-  }
+	"prefix": "!"
 }

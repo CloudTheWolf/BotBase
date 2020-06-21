@@ -3,15 +3,29 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Company>CloudTheWolf</Company>
+    <Company>CloudTheWolf Ltd</Company>
     <Authors>Michael Howard</Authors>
+    <PackageId>ctw.BotData</PackageId>
+    <PackageTags>Discord, DSharpPlus,ctw, MySql</PackageTags>
+    <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
+    <Description>A Basic Sql Library for Discord Bots running on BotBase</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BotLogger" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
     <PackageReference Include="MySqlConnector" Version="0.69.2" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="ctw.BotLogger" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

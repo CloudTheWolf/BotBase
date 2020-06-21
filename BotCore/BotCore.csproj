@@ -8,23 +8,32 @@
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <Version>1.0.0.1</Version>
+    <AssemblyName>ctw.BotCore</AssemblyName>
+    <Product>BotCore</Product>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
+    <Description>Core Bot Classes.</Description>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="config.json" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ctw.BotShared" Version="1.0.2" />
     <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00703" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
-    <PackageReference Include="MySqlConnector" Version="0.69.2" />
-    <PackageReference Include="BotLogger" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BotShared\BotShared.csproj" />
+    <PackageReference Include="ctw.BotLogger" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
