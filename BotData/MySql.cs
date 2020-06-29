@@ -11,14 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace BotData
 {
-    class MySql
+    public class MySql
     {
         private string dbhost = string.Empty;
         private string dbuser = string.Empty;
         private string dbpass = string.Empty;
         private string dbname = string.Empty;
         private MySqlConnection sqlConnection = new MySqlConnection();
-
         public static ILogger<Logger> Logger;
         public MySql(ILogger<Logger> logger)
         {
