@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <Version>1.0.0.2</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotShared" Version="1.0.2" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.3" />
     <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00703" />

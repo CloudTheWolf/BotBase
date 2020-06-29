@@ -21,6 +21,7 @@ namespace BotCore
         private bool loadBase = true;
         public static DiscordClient Client { get; set; }
         public CommandsNextExtension Commands { get; set; }
+        public InteractivityExtension Interactivity { get; set; }
         private static DiscordConfiguration _config;
         private static dynamic _myConfig;
         private static readonly PluginLoader PluginLoader = new PluginLoader();
