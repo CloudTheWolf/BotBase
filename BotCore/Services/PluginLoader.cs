@@ -23,7 +23,7 @@ namespace BotCore.Services
                     var files = Directory.GetFiles(Constants.PluginsFolder);
                     foreach (var file in files)
                         if (file.EndsWith(".dll"))
-                            Assembly.LoadFile(Path.GetFullPath(file));
+                            Assembly.LoadFrom(Path.GetFullPath(file));
                 }
 
                 var interfaceType = typeof(IPlugin);

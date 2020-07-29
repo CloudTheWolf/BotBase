@@ -13,10 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotData", "BotData\BotData.
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotBase", "BotBase\BotBase.csproj", "{DA902753-D168-4AF4-9527-30588CB78561}"
+	ProjectSection(ProjectDependencies) = postProject
+		{78CA8608-4F88-4A62-8966-0E34F5B2A4FF} = {78CA8608-4F88-4A62-8966-0E34F5B2A4FF}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Module", "Example\Example.Module.csproj", "{78CA8608-4F88-4A62-8966-0E34F5B2A4FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotShared", "BotShared\BotShared.csproj", "{77C91399-8C64-474F-B80C-CB9946E99857}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B84020E8-6BEA-4C80-BA96-1E6C8E8D9E0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cove.Module", "Cove\Cove.Module.csproj", "{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +107,18 @@ Global
 		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|x86.ActiveCfg = Release|Any CPU
 		{77C91399-8C64-474F-B80C-CB9946E99857}.Release|x86.Build.0 = Release|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Debug|x86.Build.0 = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.linux-x86|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.linux-x86|Any CPU.Build.0 = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.linux-x86|x86.ActiveCfg = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.linux-x86|x86.Build.0 = Debug|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Release|x86.ActiveCfg = Release|Any CPU
+		{7D4D01B3-9C88-4A31-8DAE-D1C2C374EE58}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

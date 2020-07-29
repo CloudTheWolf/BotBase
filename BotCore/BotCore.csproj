@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.0.0.2</Version>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
+    <Version>1.0.0.4</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -17,6 +17,12 @@
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
+    <PackageProjectUrl>https://github.com/CloudTheWolf/BotBase</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
