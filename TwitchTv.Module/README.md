@@ -2,7 +2,9 @@
 
 ## About
 
-By Request I have made the TwitchTV Notifications Module public
+By Request I have made the TwitchTV Notifications Module public.
+
+This module combines [DSharpPlus](https://github.com/DSharpPlus/DSharpPlus) and [TwitchLib](https://github.com/TwitchLib/TwitchLib)
 
 This module allows server memvers to have their stream go live announcement messages get automatically sent.
 
