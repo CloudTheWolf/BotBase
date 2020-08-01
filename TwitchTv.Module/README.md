@@ -35,9 +35,9 @@ Example:
 			"AccessToken": "MyAccessToken",
 			"AutoAssign": true,
 			"AutoPurge": true,
-      "StreamerRole": "StreamerRoleId",
+                        "StreamerRole": "StreamerRoleId",
 			"VerifiedRole": "VerifiedRoleId",
-      "StreamChannel": "StreamChannelId",
+                        "StreamChannel": "StreamChannelId",
 			"LogChannel": "LogChannelId"
 		}
 ```
