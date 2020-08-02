@@ -360,3 +360,6 @@ MigrationBackup/
 
 config.json
 /Cove
+
+# Prevent local launch settings being shared
+launchSettings.json
