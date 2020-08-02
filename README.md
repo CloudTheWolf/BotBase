@@ -1,5 +1,7 @@
 # BotBase
 
+![CodeNotary](https://github.com/CloudTheWolf/BotBase/workflows/CodeNotary/badge.svg)
+
 Bot Base is a basic wrapper / framework for DSharp+ https://github.com/DSharpPlus/DSharpPlus
 
 This project was created as a base for getting started, and has no affiliation with DShap+.
