@@ -10,6 +10,19 @@ This project was created as a base for getting started, and has no affiliation w
 
 Rename config.json.example to config.json, set token to your bot token and prefix as the required bot prefix.
 
+You can now also toggle settings related to disabling Default Help and enable/disable DMs
+
+```
+{
+  "token": "{{DISCORD_TOKEN}}",
+  "prefix": "!",
+  "enableDms": true,
+  "enableMentionPrefix": false,
+  "dmHelp": false,
+  "enableDefaultHelp": false
+}
+```
+
 ## SQL Support 
 
 Add the following to enable MySql Support
