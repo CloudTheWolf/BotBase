@@ -67,12 +67,11 @@ namespace BotCore
             }
 
             _myConfig = JObject.Parse(json);
-
-            Options.Prefix = new string[] { _myConfig["prefix"].ToString() };
-            Options.EnableDms = _myConfig["enableDms"].ToString();
-            Options.EnableMentionPrefix = _myConfig["enableMentionPrefix"];
-            Options.DmHelp = _myConfig["dmHelp"].ToString();
-            Options.DefaultHelp = _myConfig["enableDefaultHelp"];
+            Options.Prefix = new string[] {_myConfig["prefix"].ToString()};
+            Options.EnableDms = bool.Parse(_myConfig["enableDms"].ToString());
+            Options.EnableMentionPrefix = bool.Parse(_myConfig["enableMentionPrefix"].ToString());
+            Options.DmHelp = bool.Parse(_myConfig["dmHelp"].ToString());
+            Options.DefaultHelp = bool.Parse(_myConfig["enableDefaultHelp"].ToString());
 
         }
 

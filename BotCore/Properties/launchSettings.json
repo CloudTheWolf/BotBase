@@ -2,7 +2,8 @@
   "profiles": {
     "BotCore": {
       "commandName": "Executable",
-      "executablePath": "..\\..\\..\\..\\BotBase\\bin\\Debug\\netcoreapp3.1\\win10-x64\\BotBase.exe"
+      "executablePath": "C:\\Users\\CloudTheWolf\\Documents\\GitHub\\BotBase\\BotBase\\bin\\Release\\netcoreapp3.1\\win10-x64\\BotBase.exe",
+      "workingDirectory": "C:\\Users\\CloudTheWolf\\Documents\\GitHub\\BotBase\\BotBase\\bin\\Release\\netcoreapp3.1\\win10-x64\\"
     }
   }
 }
