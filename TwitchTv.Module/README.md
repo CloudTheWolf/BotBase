@@ -21,6 +21,11 @@ It will create an Embed message with the following:
 Example:
 ![Example Go Live](https://img.itch.zone/aW1hZ2UvNzE1MTM4LzM5NjM4ODgucG5n/347x500/IVy5Kw.png)
 
+## Pre-Reqa
+1. MySql Database Config [See Here For Details](https://github.com/CloudTheWolf/BotBase/blob/master/README.md)
+
+2. `streams` table in your database [Get Schema Demo Here](https://github.com/CloudTheWolf/BotBase/blob/master/Sql_Schema/MySql/Schema.Sql)
+
 ## How to use
 
 1. Login into the [Twitch Developer Portal](https://dev.twitch.tv/)
