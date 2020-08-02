@@ -63,3 +63,37 @@ Your new class needs to extend BaseCommandModule.
 You can now create your own commands in this class!
 
 To learn how to make commands and use DShap+ please check out their repo for the latest 
+
+## How to debug your modules
+
+To Debug you need to add the following to your CSProj file (Replace `{{PATH_TO_REPO}}` with your actual path (Eg C:\Repo\BotBase)
+
+```
+
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>{{PATH_TO_REPO}}\BotBase\bin\Debug\netcoreapp3.1\win10-x64\Plugins\</OutputPath>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>{{PATH_TO_REPO}}\BotBase\bin\Release\netcoreapp3.1\win10-x64\Plugins\</OutputPath>
+  </PropertyGroup>
+
+
+```
+
+Then in the Debug Settings you will need to set it to Launch an executable
+```
+{{PATH_TO_REPO}}\BotBase\bin\Debug\netcoreapp3.1\win10-x64\BotBase.exe
+```
+
+And set the Working Directory to be the location of the exe (eg)
+```
+{{PATH_TO_REPO}}\BotBase\bin\Debug\netcoreapp3.1\win10-x64\
+```
