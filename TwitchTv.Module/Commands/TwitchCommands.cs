@@ -21,12 +21,15 @@ namespace TwitchTv.Module.Commands
 {
     internal class TwitchCommands : BaseCommandModule
     {
-        private Libs.Twitch twitch = new Twitch();
+        private Twitch twitch = new Twitch();
         private bool bRunning = false;
         private DatabaseActions da;
+        public ManualResetEvent CycleManualResetEvent;
+
         public TwitchCommands()
         {
             da = new DatabaseActions();
+            
         }
 
         [Command("getChannels")]
@@ -54,7 +57,6 @@ namespace TwitchTv.Module.Commands
             var large = ctx.Guild.IsLarge;
             var members = ctx.Guild.MemberCount;
             var splash = ctx.Guild.SplashUrl;
-
             var list = "";
 
             foreach (var feature in features)
@@ -106,6 +108,7 @@ namespace TwitchTv.Module.Commands
             {
                 bRunning = false;
                 await ctx.Channel.SendMessageAsync("Ok, I'll stop after this cycle");
+                CycleManualResetEvent.Set();
                 return;
             }
             await ctx.Channel.SendMessageAsync("I am not running...");
@@ -328,7 +331,8 @@ namespace TwitchTv.Module.Commands
                    Ttv.Logger.LogCritical($"{e}");
                    await LogAction($"TwitchTV Module encountered an error in task `ScanChannels() ` \n {e.Message}\n```{e}```", ctx);
                 }
-                Thread.Sleep(30000);
+
+                CycleManualResetEvent.WaitOne(TimeSpan.FromSeconds(30));
             }
         }
     }
