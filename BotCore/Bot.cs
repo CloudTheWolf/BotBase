@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -65,18 +67,27 @@ namespace BotCore
             }
 
             _myConfig = JObject.Parse(json);
+
+            Options.Prefix = new string[] { _myConfig["prefix"].ToString() };
+            Options.EnableDms = _myConfig["enableDms"].ToString();
+            Options.EnableMentionPrefix = _myConfig["enableMentionPrefix"];
+            Options.DmHelp = _myConfig["dmHelp"].ToString();
+            Options.DefaultHelp = _myConfig["enableDefaultHelp"];
+
         }
+
 
         private void CreateClientCommandConfiguration()
         {
             var commandsConfig = new CommandsNextConfiguration
             {
-                StringPrefixes = new string[] {_myConfig["prefix"].ToString()},
-                EnableDms = true,
-                EnableMentionPrefix = true,
-                DmHelp = false
+                StringPrefixes = Options.Prefix,
+                EnableDms = Options.EnableDms,
+                EnableMentionPrefix = Options.EnableMentionPrefix,
+                DmHelp = Options.DmHelp,
+                EnableDefaultHelp = Options.DefaultHelp
             };
-
+            
             Commands = Client.UseCommandsNext(commandsConfig);
         }
 

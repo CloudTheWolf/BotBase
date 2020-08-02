@@ -12,7 +12,7 @@
     <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
     <Description>A Basic Sql Library for Discord Bots running on BotBase</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>1.0.2</Version>
+    <Version>1.0.</Version>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

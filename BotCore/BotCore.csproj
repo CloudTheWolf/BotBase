@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.0.4</AssemblyVersion>
-    <FileVersion>1.0.0.4</FileVersion>
-    <Version>1.0.0.4</Version>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+    <Version>1.0.0.5</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
