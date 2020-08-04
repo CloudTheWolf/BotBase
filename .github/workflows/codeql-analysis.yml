@@ -47,7 +47,8 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       dotnet build --configuration Release
+       dotnet restore --configfile "./.NuGet/NuGet.Config"
+       dotnet build --configuration Release --no-restore
     #   make release
 
     - name: Perform CodeQL Analysis
