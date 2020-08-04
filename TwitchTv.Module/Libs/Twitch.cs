@@ -13,8 +13,8 @@ namespace TwitchTv.Module.Libs
         internal Twitch()
         {
             api = new TwitchAPI();
-            api.Settings.ClientId = Options.ClientId;
-            api.Settings.AccessToken = Options.AccessToken;
+            api.Settings.ClientId = TwitchOptions.ClientId;
+            api.Settings.AccessToken = TwitchOptions.AccessToken;
 
         }
 

@@ -7,10 +7,10 @@ namespace TwitchTv.Module
 {
     class TwitchOptions
     {
-        [Description("Tiwtch Client ID")]
+        [Description("Twitch Client ID")]
         internal static string ClientId { get; set; }
         
-        [Description("Tiwtch Access Token")]
+        [Description("Twitch Access Token")]
         internal static string AccessToken { get; set; }
         
         [Description("Assign Roles To Streamers")]

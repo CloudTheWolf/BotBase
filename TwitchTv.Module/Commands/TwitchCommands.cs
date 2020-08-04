@@ -91,7 +91,7 @@ namespace TwitchTv.Module.Commands
                 bRunning = true;
                 await ctx.Channel.SendMessageAsync("Will start checking for streamers going live");
                 #pragma warning disable CS4014 
-                ScanChannels(ctx, ctx.Guild.GetChannel(Options.TargetChannelId)).ConfigureAwait(false);
+                ScanChannels(ctx, ctx.Guild.GetChannel(TwitchOptions.TargetChannelId)).ConfigureAwait(false);
                 #pragma warning restore CS4014 
                 return;
             }
@@ -125,8 +125,8 @@ namespace TwitchTv.Module.Commands
             da.UpgradeStream(memberId);
             await ctx.RespondAsync($"Ok, I'll now `@here` mention for <@!{memberId}>'s Streams");
             await LogAction($"<@!{ctx.Member.Id}> has approved <@!{memberId}>'s Streams for `@here` mentions", ctx);
-            if(!Options.AutoAssignRoles) return;
-            var VerifiedStreamerRole = ctx.Guild.GetRole(Options.VerifiedRole);
+            if(!TwitchOptions.AutoAssignRoles) return;
+            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
             var discordMember = await ctx.Guild.GetMemberAsync(memberId);
             await discordMember.GrantRoleAsync(VerifiedStreamerRole);
         }
@@ -149,10 +149,10 @@ namespace TwitchTv.Module.Commands
             await ctx.RespondAsync($"{channel} has been added for <@!{memberId}>!");
             await LogAction($"<@!{ctx.Member.Id}> has enabled Stream Announcements for user <@!{memberId}> and channel https://twitch.tv/" 
                             + $"{channel}", ctx);
-            if(!Options.AutoAssignRoles) return;
+            if(!TwitchOptions.AutoAssignRoles) return;
             var member = await ctx.Guild.GetMemberAsync(memberId);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(Options.VerifiedRole);
-            var StreamerRole = ctx.Guild.GetRole(Options.StreamerRole);
+            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
+            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
             await member.GrantRoleAsync(StreamerRole);
             if (ping == 1) await member.GrantRoleAsync(VerifiedStreamerRole);
             
@@ -173,8 +173,8 @@ namespace TwitchTv.Module.Commands
             da.AddStream(Uri.EscapeUriString(channel), memberId);
             await ctx.RespondAsync($"<@!{memberId}>, I will add you to the <#713084294490488933>");
             await LogAction($"<@!{memberId}> has enabled Stream Announcements for https://twitch.tv/" + $"{channel}", ctx);
-            if (!Options.AutoAssignRoles) return;
-            var StreamerRole = ctx.Guild.GetRole(Options.StreamerRole);
+            if (!TwitchOptions.AutoAssignRoles) return;
+            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
             await ctx.Member.GrantRoleAsync(StreamerRole);
             
 
@@ -189,11 +189,11 @@ namespace TwitchTv.Module.Commands
             da.DeleteStream(memberId.ToString());
             await ctx.RespondAsync($"<@!{memberId}>, I will stop announcing your stream in <#713084294490488933>");
             await LogAction($"<@!{memberId}> has removed Stream Announcements", ctx);
-            if (!Options.AutoAssignRoles) return;
+            if (!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
-            var StreamerRole = ctx.Guild.GetRole(Options.StreamerRole);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(Options.VerifiedRole);
+            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
+            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
             await LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx);
@@ -211,11 +211,11 @@ namespace TwitchTv.Module.Commands
             da.DeleteStream(memberId.ToString());
             await ctx.RespondAsync($"Stream Removed For <@!{memberId}>");
             await LogAction($"<@!{ctx.Member.Id}> has removed stream notifications for <@!{memberId}>", ctx);
-            if(!Options.AutoAssignRoles) return;
+            if(!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
-            var StreamerRole = ctx.Guild.GetRole(Options.StreamerRole);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(Options.VerifiedRole);
+            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
+            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
             await LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx);
@@ -224,7 +224,7 @@ namespace TwitchTv.Module.Commands
 
         public async Task LogAction(string message, CommandContext ctx)
         {
-            DiscordChannel logChannel = await ctx.Client.GetChannelAsync(Options.LogChannelId);
+            DiscordChannel logChannel = await ctx.Client.GetChannelAsync(TwitchOptions.LogChannelId);
             await logChannel.SendMessageAsync(message);
         }
 
