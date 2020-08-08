@@ -91,7 +91,7 @@ namespace TwitchTv.Module.Commands
                 bRunning = true;
                 await ctx.Channel.SendMessageAsync("Will start checking for streamers going live");
                 #pragma warning disable CS4014 
-                ScanChannels(ctx, ctx.Guild.GetChannel(TwitchOptions.TargetChannelId)).ConfigureAwait(false);
+                ScanChannels(ctx, ctx.Guild.GetChannel(TwitchOptions.TargetChannelId)).ConfigureAwait(true);
                 #pragma warning restore CS4014 
                 return;
             }
@@ -332,7 +332,7 @@ namespace TwitchTv.Module.Commands
                    await LogAction($"TwitchTV Module encountered an error in task `ScanChannels() ` \n {e.Message}\n```{e}```", ctx);
                 }
 
-                CycleManualResetEvent.WaitOne(TimeSpan.FromSeconds(30));
+                Thread.Sleep(TimeSpan.FromSeconds(30));
             }
         }
     }
