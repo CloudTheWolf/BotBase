@@ -47,7 +47,7 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       dotnet restore --configfile "./.NuGet/NuGet.Config"
+       dotnet restore --configfile NuGet.Config
        dotnet build --configuration Release --no-restore
     #   make release
 
