@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Threading;
 using System.Threading.Tasks;
 using BotLogger;
 using Microsoft.Extensions.Logging;
@@ -10,15 +8,16 @@ namespace Level.Module.Libs
 {
     class DatabaseActions
     {
-        public static ILogger<Logger> DbLogger;
-        private static BotData.MySql mSql;
+        public static ILogger<Logger> DbLogger = Level.Logger;
+        private static BotData.MySql mSql = new BotData.MySql(DbLogger);
+
 
         internal static async Task GiveExp(string member, bool voice = false, int expOverride = 0)
         {
             int exp = LevelOptions.ExpPerMessage;
             var args = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("member", member)
+                new KeyValuePair<string, string>("userid", member)
             };
             if (voice)
             {
@@ -30,8 +29,17 @@ namespace Level.Module.Libs
             {
                 exp = expOverride;
             }
-            args.Add(new KeyValuePair<string, string>("msgExp",exp.ToString()));
-            await Task.Run(() => mSql.RunProcedure("Levels_GiveMsgExp", args));
+
+            args.Add(new KeyValuePair<string, string>("exp", exp.ToString()));
+            try
+            {
+                await Task.Run(() => mSql.RunProcedure("Levels_GiveMsgExp", args));
+            }
+            catch (Exception e)
+            {
+                DbLogger.LogError($"{e}");
+            }
+
         }
 
     }

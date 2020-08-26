@@ -34,10 +34,10 @@ namespace Level.Module
             logger.LogInformation($"{Name}: Loaded successfully!");
             bot.Commands.RegisterCommands<LevelCommands>();
             LevelCancellationToken = new CancellationToken(false);
-            bot.Client.MessageCreated += Client_MessageCreated;
-            bot.Client.MessageDeleted += Client_MessageDeleted;
-            
-            logger.LogInformation($"{Name}: Loaded Client_MessageCreated!");
+            bot.Client.MessageCreated += LevelsClient_MessageCreated;
+            bot.Client.MessageDeleted += LevelsClient_MessageDeleted;
+            bot.Client.VoiceStateUpdated += LevelsClient_VoiceStateUpdated;
+            logger.LogInformation($"{Name}: Loaded LevelsClient_MessageCreated!");
 
 
         }
