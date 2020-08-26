@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.0.6</AssemblyVersion>
-    <FileVersion>1.0.0.6</FileVersion>
-    <Version>1.0.0.6</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1.0</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -22,7 +22,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>1</WarningLevel>
-    <OutputPath>C:\Users\CloudTheWolf\Documents\GitHub\BotBase\BotBase\bin\Release\netcoreapp3.1\win10-x64\</OutputPath>
+    <OutputPath>E:\GitHub\BotBase\BotBase\bin\Release\netcoreapp3.1\win10-x64</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
@@ -35,22 +35,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotShared" Version="1.0.3" />
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00703" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.5" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-nightly-00712" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
     <PackageReference Include="ctw.BotLogger" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Plugins\Example.Module.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -12,16 +12,18 @@
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
-    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <FileVersion>1.0.5</FileVersion>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ctw.BotLogger" Version="1.0.0" />
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00703" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00703" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00703" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-nightly-00712" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.0" />
   </ItemGroup>
 

@@ -58,6 +58,7 @@ namespace BotCore.Services
                 //Create a new instance of all found types
                 foreach (var type in types)
                 {
+                    Console.WriteLine(type.FullName);
                     Plugins.Add((IPlugin) Activator.CreateInstance(type));
                 }
             }

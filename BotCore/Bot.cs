@@ -12,6 +12,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using LogLevel = DSharpPlus.LogLevel;
@@ -20,8 +21,9 @@ namespace BotCore
 {
     public class Bot : IBot
     {
-        private bool loadBase = true;
-        public static DiscordClient Client { get; set; }
+        public DiscordClient Client { get; set; }
+        public VoiceNextExtension Voice { get; set; }
+        public DiscordRestClient Rest { get; set; }
         public CommandsNextExtension Commands { get; set; }
         public InteractivityExtension Interactivity { get; set; }
         private static DiscordConfiguration _config;
@@ -40,8 +42,9 @@ namespace BotCore
             CreateDiscordClient();
             CreateClientCommandConfiguration();
             InitPlugins();
-
             await Client.ConnectAsync();
+            
+            
             await Task.Delay(-1, stoppingToken);
         }
 
@@ -90,7 +93,7 @@ namespace BotCore
             Commands = Client.UseCommandsNext(commandsConfig);
         }
 
-        private static void CreateDiscordClient()
+        private void CreateDiscordClient()
         {
             Client = new DiscordClient(_config);
 
