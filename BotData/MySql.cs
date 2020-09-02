@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
-using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using BotLogger;
 using Microsoft.Extensions.Logging;
+using MySqlConnector;
 
 namespace BotData
 {
@@ -101,56 +102,32 @@ namespace BotData
             
         }
 
-        [Description("Run a stored procedure and return as a JSON String")]
-        public string RunProcedure(string procedure, List<KeyValuePair<string, string>> args)
-        {
-            try
-            {
-                MySqlCommand command = new MySqlCommand(procedure, sqlConnection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                foreach (var arg in args)
-                {
-                    command.Parameters.AddWithValue(arg.Key, arg.Value);
-                }
-
-                DataTable dt = new DataTable();
-                using MySqlDataAdapter sda = new MySqlDataAdapter(command);
-                sda.Fill(dt);
-
-                if (dt.Rows.Count == 0)
-                    return "";
-
-                return JsonConvert.SerializeObject(dt, Formatting.Indented);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                throw new Exception(e.Message);
-            }
-
-        }
-
         [Description("Run a stored procedure and return as a Data Table")]
-        public DataTable RunProcedure(string procedure, List<KeyValuePair<string, object>> arguments)
+        public async Task<DataTable> RunProcedure(string procedure, List<KeyValuePair<string, object>> arguments)
         {
             try
             {
+                var conn = new MySqlConnection(sqlConnection.ConnectionString);
                 MySqlCommand command = new MySqlCommand(procedure, sqlConnection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                foreach (var arg in arguments)
+                foreach (var (key, value) in arguments)
                 {
-                    command.Parameters.AddWithValue(arg.Key, arg.Value);
+                    command.Parameters.AddWithValue(key, value);
                 }
 
                 DataTable dt = new DataTable();
-                using MySqlDataAdapter sda = new MySqlDataAdapter(command);
-                sda.Fill(dt);
+                if (conn.State != ConnectionState.Open)
+                {
+                    await conn.OpenAsync();
+                }
+                using (MySqlDataAdapter sda = new MySqlDataAdapter(command))
+                {
+                    
+                    sda.Fill(dt);
+                }
 
                 return dt;
             }
