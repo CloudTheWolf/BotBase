@@ -16,7 +16,7 @@ namespace TwitchTv.Module.Libs
             coveSql = new BotData.MySql(DbLogger);
         }
 
-        internal DataTable getStreamers()
+        internal DataTable GetStreamers()
         {
             try
             {

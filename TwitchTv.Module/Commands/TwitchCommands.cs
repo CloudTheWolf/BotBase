@@ -21,9 +21,9 @@ namespace TwitchTv.Module.Commands
 {
     internal class TwitchCommands : BaseCommandModule
     {
-        private Twitch twitch = new Twitch();
+        private readonly Twitch twitch = new Twitch();
         private bool bRunning = false;
-        private DatabaseActions da;
+        private readonly DatabaseActions da;
         public ManualResetEvent CycleManualResetEvent;
 
         public TwitchCommands()
@@ -272,7 +272,7 @@ namespace TwitchTv.Module.Commands
                 Ttv.Logger.LogInformation("Start Cycle");
                 try
                 {
-                    var streams = da.getStreamers();
+                    var streams = da.GetStreamers();
                     foreach (DataRow stream in streams.Rows)
                     {
                         try
