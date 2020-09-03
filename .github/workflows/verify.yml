@@ -11,7 +11,7 @@ jobs:
      - name: Checkout
        uses: actions/checkout@master
 
-     - name: Verify
+     - name: CodeNotary-Verify
        uses: vchain-us/verify-action@master
        with:
          signerID: '0xa6496640022a44bb32b6f4aa3eaab56865f87ef7'
