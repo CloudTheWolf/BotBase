@@ -12,15 +12,20 @@
     <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
     <Description>A Basic Sql Library for Discord Bots running on BotBase</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>1.0.2.1</Version>
-    <AssemblyVersion>1.0.2.1</AssemblyVersion>
-    <FileVersion>1.0.2.1</FileVersion>
+    <Version>1.0.2.3</Version>
+    <AssemblyVersion>1.0.2.3</AssemblyVersion>
+    <FileVersion>1.0.2.3</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>1.0.2.1
-====
-* Minor Improvments to MySql
-* Added Basing Microsoft SQL Stored Procedure Support</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
+
+	<PropertyGroup>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <OutputPath>E:\GitHub\BotBase\BotBase\bin\Release\netcoreapp3.1\win10-x64\Plugins\</OutputPath>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />

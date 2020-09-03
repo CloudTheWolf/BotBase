@@ -107,25 +107,29 @@ namespace BotData
         {
             try
             {
-                var conn = new MySqlConnection(sqlConnection.ConnectionString);
-                MySqlCommand command = new MySqlCommand(procedure, sqlConnection)
+                MySqlConnectionStringBuilder cb = new MySqlConnectionStringBuilder()
+                {
+                    Server = dbhost,
+                    UserID = dbuser,
+                    Password = dbpass,
+                    Database = dbname,
+                    ConnectionIdlePingTime = 60
+                };
+                var conn = new MySqlConnection(cb.ConnectionString);
+                MySqlCommand command = new MySqlCommand(procedure, conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                foreach (var (key, value) in arguments)
+                foreach (var args in arguments)
                 {
-                    command.Parameters.AddWithValue(key, value);
+                    command.Parameters.AddWithValue(args.Key, args.Value);
                 }
 
                 DataTable dt = new DataTable();
-                if (conn.State != ConnectionState.Open)
+
+                using (var sda = new MySqlDataAdapter(command))
                 {
-                    await conn.OpenAsync();
-                }
-                using (MySqlDataAdapter sda = new MySqlDataAdapter(command))
-                {
-                    
                     sda.Fill(dt);
                 }
 
