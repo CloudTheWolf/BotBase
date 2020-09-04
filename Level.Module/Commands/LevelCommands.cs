@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using BotData;
 using BotLogger;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -24,28 +26,45 @@ namespace Level.Module.Commands
         public static bool bRunning;
 
 
-        [Command("lt")]
-        public async Task aaa(CommandContext ctx)
+        [Command("level")]
+        public async Task GetUserLevel(CommandContext ctx)
         {
-            Level.Logger.LogCritical("Something Red");
+            var user = DatabaseActions.GetUserExp(ctx.User.Id).Result;
+            if(user == null) return;
+            var args = new List<KeyValuePair<string,string>>()
+            {
+                new KeyValuePair<string, string>("Level",user.Rows[0]["level"].ToString()),
+                new KeyValuePair<string, string>("Exp",user.Rows[0]["exp"].ToString())
+            };
+            var avatar = ctx.Member.AvatarUrl;
+            if (user.Rows[0]["badgeImageUrl"] != DBNull.Value) avatar = user.Rows[0]["badgeImageUrl"].ToString();
+            DiscordEmbed embed = LevelTasks.BuildEmbedTask("Chat Exp!", "Levels!", ctx.Guild.IconUrl ,args,avatar);
+            await ctx.RespondAsync(embed: embed);
         }
 
-        public static async Task LevelsClient_MessageCreated(MessageCreateEventArgs e)
+        [Command("vc_level")]
+        public async Task GetUserVoiceLevel(CommandContext ctx)
         {
-            if (e.Author.IsBot) return;
-            await DatabaseActions.GiveExp(e.Author.Id.ToString());
+            var user = DatabaseActions.GetUserExp(ctx.User.Id,true).Result;
+            if (user == null) return;
+            var args = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("Level",user.Rows[0]["level"].ToString()),
+                new KeyValuePair<string, string>("Exp",user.Rows[0]["voice_exp"].ToString())
+            };
+            var avatar = ctx.Member.AvatarUrl;
+            if (user.Rows[0]["badgeImageUrl"] != DBNull.Value) avatar = user.Rows[0]["badgeImageUrl"].ToString();
+            DiscordEmbed embed = LevelTasks.BuildEmbedTask("Voice Exp!", "Levels!", ctx.Guild.IconUrl, args, avatar);
+            await ctx.RespondAsync(embed: embed);
         }
 
-        public static async Task LevelsClient_MessageDeleted(MessageDeleteEventArgs e)
+        [Command("reset_levels")]
+        [Description("Resets EXP and Voice EXP")]
+        public async Task ResetUserLevels(CommandContext ctx, string id)
         {
-            if (e.Message.Author.IsBot) return;
-            //TODO: Revoke EXP
-        }
-
-        public static async Task LevelsClient_VoiceStateUpdated(VoiceStateUpdateEventArgs e)
-        {
-            if(e.User.IsBot) return;
-            //TODO: Add Voice State EXP
+            var user = await ctx.Client.GetUserAsync(ulong.Parse(id));
+            await ctx.RespondAsync($"Will Reset user EXP for {user.Username}[{id}]");
+            await DatabaseActions.ResetExp(id);
         }
     }
 }

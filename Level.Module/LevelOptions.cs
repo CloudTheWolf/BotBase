@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+
 
 namespace Level.Module
 {
     class LevelOptions
     {
-        public static int ExpPerMessage { get; set; } = 5;
+        public static decimal ExpPerMessage { get; set; }
 
-        public static int ExpPerVoiceMin { get; set; } = 5;
+        public static decimal ExpPerVoiceMin { get; set; }
+        
+        [Description("Remove all EXP from banned users")]
+        public static bool PurgeExpOnBan { get; set; }
     }
 }

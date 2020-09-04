@@ -24,8 +24,9 @@ namespace Level.Module
         private static DiscordConfiguration _discordConfiguration;
         private dynamic _myConfig;
         public static CancellationToken LevelCancellationToken;
-        
-        public void InitPlugin(IBot bot, ILogger<Logger> logger, DiscordConfiguration discordConfiguration, dynamic applicationConfig)
+
+        public void InitPlugin(IBot bot, ILogger<Logger> logger, DiscordConfiguration discordConfiguration,
+            dynamic applicationConfig)
         {
             Logger = logger;
             _myConfig = applicationConfig;
@@ -34,22 +35,22 @@ namespace Level.Module
             logger.LogInformation($"{Name}: Loaded successfully!");
             bot.Commands.RegisterCommands<LevelCommands>();
             LevelCancellationToken = new CancellationToken(false);
-            bot.Client.MessageCreated += LevelsClient_MessageCreated;
-            bot.Client.MessageDeleted += LevelsClient_MessageDeleted;
-            bot.Client.VoiceStateUpdated += LevelsClient_VoiceStateUpdated;
+            bot.Client.MessageCreated += LevelTasks.LevelsClient_MessageCreated;
+            bot.Client.MessageDeleted += LevelTasks.LevelsClient_MessageDeleted;
+            bot.Client.VoiceStateUpdated += LevelTasks.LevelsClient_VoiceStateUpdated;
+            bot.Client.GuildBanAdded += LevelTasks.LevelClient_BanUser;
             logger.LogInformation($"{Name}: Loaded LevelsClient_MessageCreated!");
 
 
         }
 
-        
-
         private void SetConfig()
         {
             try
             {
-                LevelOptions.ExpPerMessage = int.Parse(_myConfig.Level["MsgExp"].ToString());
-                LevelOptions.ExpPerVoiceMin = int.Parse(_myConfig.Level["VoiceExp"].ToString());
+                LevelOptions.ExpPerMessage = decimal.Parse(_myConfig.Level["MsgExp"].ToString());
+                LevelOptions.ExpPerVoiceMin = decimal.Parse(_myConfig.Level["VoiceExp"].ToString());
+                LevelOptions.PurgeExpOnBan = bool.Parse(_myConfig.Level["PurgeExpOnBan"].ToString());
             }
             catch (Exception e)
             {
@@ -58,7 +59,5 @@ namespace Level.Module
                 LevelOptions.ExpPerVoiceMin = 10;
             }
         }
-
-
     }
 }
