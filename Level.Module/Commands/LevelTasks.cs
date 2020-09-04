@@ -21,8 +21,9 @@ namespace Level.Module.Commands
 
         public static async Task LevelsClient_MessageDeleted(MessageDeleteEventArgs e)
         {
+            if(!LevelOptions.RemoveExpOnMessageDelete) return;
             if (e.Message.Author.IsBot) return;
-            //TODO: Revoke EXP
+            await DatabaseActions.RevokeExp(e.Message.Author.Id.ToString());
         }
 
         public static async Task LevelsClient_VoiceStateUpdated(VoiceStateUpdateEventArgs e)

@@ -62,8 +62,7 @@ namespace Level.Module.Libs
             };
             if (voice)
             {
-                exp = (expOverride == 0) ? LevelOptions.ExpPerVoiceMin : expOverride;
-                args.Add(new KeyValuePair<string, object>("exp", exp.ToString()));
+                args.Add(new KeyValuePair<string, object>("exp", expOverride.ToString()));
                 try
                 {
                     await mSql.RunProcedure("Levels_RevokeVoiceExp", args);
@@ -137,7 +136,6 @@ namespace Level.Module.Libs
             var spName = voice ? "Level_GetUserVoiceStats" : "Level_GetUserStats";
             try
             {
-                //Level_GetUserVoiceStats
                 return mSql.RunProcedure(spName, args).Result;
                 
             }

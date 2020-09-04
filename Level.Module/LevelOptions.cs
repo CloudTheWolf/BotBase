@@ -14,5 +14,8 @@ namespace Level.Module
         
         [Description("Remove all EXP from banned users")]
         public static bool PurgeExpOnBan { get; set; }
+
+        [Description("Remove EXP when user deletes a message")]
+        public static bool RemoveExpOnMessageDelete { get; set; }
     }
 }

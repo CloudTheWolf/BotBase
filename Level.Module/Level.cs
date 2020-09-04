@@ -51,6 +51,7 @@ namespace Level.Module
                 LevelOptions.ExpPerMessage = decimal.Parse(_myConfig.Level["MsgExp"].ToString());
                 LevelOptions.ExpPerVoiceMin = decimal.Parse(_myConfig.Level["VoiceExp"].ToString());
                 LevelOptions.PurgeExpOnBan = bool.Parse(_myConfig.Level["PurgeExpOnBan"].ToString());
+                LevelOptions.RemoveExpOnMessageDelete = bool.Parse(_myConfig.Level["RevokeOnMsgDelete"].ToString());
             }
             catch (Exception e)
             {
