@@ -59,6 +59,7 @@ namespace Level.Module.Commands
         }
 
         [Command("reset_levels")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description("Resets EXP and Voice EXP")]
         public async Task ResetUserLevels(CommandContext ctx, string id)
         {
