@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Levels_GiveMsgExp`(IN `userid` BIGINT, IN `exp` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Levels_GiveMsgExp`(IN `userid` BIGINT, IN `exp` DECIMAL(11,3))
     MODIFIES SQL DATA
     DETERMINISTIC
 BEGIN
