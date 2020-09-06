@@ -18,7 +18,7 @@ namespace TwitchTv.Module.Libs
 
         }
 
-        public bool isOnline(string channelId)
+        public bool IsOnline(string channelId)
         {
             var uptime = api.V5.Streams.GetUptimeAsync(channelId).Result;
             var channel = api.V5.Channels.GetChannelByIDAsync(channelId).Result;

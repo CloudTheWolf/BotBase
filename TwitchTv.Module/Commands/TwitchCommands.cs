@@ -2,18 +2,16 @@
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using BotLogger;
-using TwitchTv.Module.Libs;
 using DSharpPlus;
+using TwitchTv.Module.Libs;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using static TwitchTv.Module.Ttv;
 using DiscordEmbed = TwitchTv.Module.Libs.DiscordEmbed;
 
 
@@ -22,15 +20,7 @@ namespace TwitchTv.Module.Commands
     internal class TwitchCommands : BaseCommandModule
     {
         private readonly Twitch twitch = new Twitch();
-        private bool bRunning = false;
-        private readonly DatabaseActions da;
-        public ManualResetEvent CycleManualResetEvent;
-
-        public TwitchCommands()
-        {
-            da = new DatabaseActions();
-            
-        }
+        private static readonly DatabaseActions da = new DatabaseActions();
 
         [Command("getChannels")]
         [Description("Get All Streams From DB")]
@@ -38,8 +28,8 @@ namespace TwitchTv.Module.Commands
         public async Task GetAllStreams(CommandContext ctx)
         {
             await ctx.Message.DeleteAsync();
-            var data = da.GetAllStreams();
-            File.WriteAllText("Members.json", data);
+            var data = da.GetAllStreams(ctx.Guild.Id);
+            File.WriteAllText("Members.json", JsonConvert.SerializeObject(JArray.FromObject(data)));
 
             await ctx.Member.SendFileAsync("Members.json", "Roles Attached");
         }
@@ -50,8 +40,8 @@ namespace TwitchTv.Module.Commands
         public async Task Status(CommandContext ctx)
         {
 
-            dynamic lastStream = JArray.Parse(da.GetLastStream());
-            var streams = JArray.Parse(da.GetAllStreams());
+            dynamic lastStream = JArray.FromObject(da.GetLastStream(ctx.Guild.Id));
+            var streams = JArray.FromObject(da.GetAllStreams(ctx.Guild.Id));
             var avatar = ctx.Guild.IconUrl;
             var features = ctx.Guild.Features.Cast<string>();
             var large = ctx.Guild.IsLarge;
@@ -65,7 +55,7 @@ namespace TwitchTv.Module.Commands
             }
 
             var embed = DiscordEmbed.BotStatusBuilder($"{lastStream[0]["Twitch"]} - <@!{lastStream[0]["discordId"]}>",
-                $"{bRunning}", streams.Count().ToString(), avatar, list, large, members.ToString(),splash);
+                $"{TwitchTasks.bRunning}", streams.Count().ToString(), avatar, list, large, members.ToString(),splash);
             await ctx.RespondAsync(embed: embed);
         }
 
@@ -76,44 +66,11 @@ namespace TwitchTv.Module.Commands
         {
             Ttv.Logger.LogInformation($"Do a thing");
             var streamId = twitch.GetChannelId(channel);
-            if (!twitch.isOnline(streamId)) return;
+            if (!twitch.IsOnline(streamId)) return;
             var embed = twitch.BuildPromoEmbed(channel, true);
             await ctx.Channel.SendMessageAsync(embed: embed);
         }
 
-        [Command("ttv.start")]
-        [Description("Start the Auto-Announcement System")]
-        [RequireRoles(RoleCheckMode.Any, "Discord Mod")]
-        public async Task TtvStart(CommandContext ctx)
-        {
-            if(!bRunning)
-            {
-                bRunning = true;
-                await ctx.Channel.SendMessageAsync("Will start checking for streamers going live");
-                #pragma warning disable CS4014 
-                ScanChannels(ctx, ctx.Guild.GetChannel(TwitchOptions.TargetChannelId)).ConfigureAwait(true);
-                #pragma warning restore CS4014 
-                return;
-            }
-            await ctx.Channel.SendMessageAsync("I am already running...");
-
-        }
-
-        [Command("ttv.stop")]
-        [Description("Stop the Auto-Announcement System")]
-        [RequireRoles(RoleCheckMode.Any, "TTVMod")]
-        public async Task TtvStop(CommandContext ctx)
-        {
-            if (bRunning)
-            {
-                bRunning = false;
-                await ctx.Channel.SendMessageAsync("Ok, I'll stop after this cycle");
-                CycleManualResetEvent.Set();
-                return;
-            }
-            await ctx.Channel.SendMessageAsync("I am not running...");
-
-        }
 
         [Command("ttv.approve")]
         [Description("Approve a stream for @here mentions")]
@@ -121,14 +78,18 @@ namespace TwitchTv.Module.Commands
         public async Task Approve(CommandContext ctx, [Description("Specify the member you want to add")]
             string member)
         {
-            var memberId = ParseMemberToId(member);
-            da.UpgradeStream(memberId);
+            var memberId = TwitchTasks.ParseMemberToId(member);
+            da.UpgradeStream(memberId,ctx.Guild.Id,0);
             await ctx.RespondAsync($"Ok, I'll now `@here` mention for <@!{memberId}>'s Streams");
-            await LogAction($"<@!{ctx.Member.Id}> has approved <@!{memberId}>'s Streams for `@here` mentions", ctx);
+            await TwitchTasks.LogAction($"<@!{ctx.Member.Id}> has approved <@!{memberId}>'s Streams for `@here` mentions", ctx.Client);
             if(!TwitchOptions.AutoAssignRoles) return;
-            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
+            var verifiedRoleIdRequest = da.GetSettingsForGuild(ctx.Guild.Id, "VerifiedRole");
+            if(verifiedRoleIdRequest.Rows.Count == 0) return;
+            if(string.IsNullOrWhiteSpace(verifiedRoleIdRequest.Rows[0]["biValue"].ToString())) return;
+            var verifiedRoleId = ulong.Parse(verifiedRoleIdRequest.Rows[0]["biValue"].ToString()!);
+            var verifiedStreamerRole = ctx.Guild.GetRole(verifiedRoleId);
             var discordMember = await ctx.Guild.GetMemberAsync(memberId);
-            await discordMember.GrantRoleAsync(VerifiedStreamerRole);
+            await discordMember.GrantRoleAsync(verifiedStreamerRole);
         }
 
         [Command("ttv.add")]
@@ -138,25 +99,49 @@ namespace TwitchTv.Module.Commands
             [Description("Mention the user to add")] string mention, [Description("Ping Here")] int ping)
         {
             
-            var memberId = ParseMemberToId(mention);
+            var memberId = TwitchTasks.ParseMemberToId(mention);
             await ctx.Message.DeleteAsync();
-            if (da.CanAddStream(memberId, channel) > 0)
+            if (da.CanAddStream(channel,ctx.Guild.Id, ctx.Member.Id) > 0)
             {
                 await ctx.RespondAsync("Failed To Add Stream, Member or Stream Already Added");
                 return;
             }
-            da.AddStream(channel, memberId,ping);
+            da.AddStream(channel, memberId,ctx.Guild.Id, ping);
             await ctx.RespondAsync($"{channel} has been added for <@!{memberId}>!");
-            await LogAction($"<@!{ctx.Member.Id}> has enabled Stream Announcements for user <@!{memberId}> and channel https://twitch.tv/" 
-                            + $"{channel}", ctx);
+            await TwitchTasks.LogAction($"<@!{ctx.Member.Id}> has enabled Stream Announcements for user <@!{memberId}> and channel https://twitch.tv/" 
+                            + $"{channel}", ctx.Client);
             if(!TwitchOptions.AutoAssignRoles) return;
-            var member = await ctx.Guild.GetMemberAsync(memberId);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
-            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
-            await member.GrantRoleAsync(StreamerRole);
-            if (ping == 1) await member.GrantRoleAsync(VerifiedStreamerRole);
-            
+            try
+            {
+                var member = await ctx.Guild.GetMemberAsync(memberId);
 
+
+                var streamerRole = GetRoleFromId(ctx.Guild.Id, "StreamerRole", ctx);
+
+                await member.GrantRoleAsync(streamerRole);
+
+                if (ping != 1) return;
+
+                var verifiedStreamerRole = GetRoleFromId(ctx.Guild.Id, "VerifiedRole",ctx);
+                await member.GrantRoleAsync(verifiedStreamerRole);
+
+            }
+            catch (Exception e)
+            {
+                Ttv.Logger.LogError($"Error Assigning Roles {e.Message}");
+            }
+
+        }
+
+        private static DiscordRole GetRoleFromId(ulong guildId, string role, CommandContext ctx)
+        {
+            var streamerRoleIdRequest = da.GetSettingsForGuild(guildId, role);
+            if (streamerRoleIdRequest.Rows.Count == 0 ||
+                string.IsNullOrWhiteSpace(streamerRoleIdRequest.Rows[0]["biValue"].ToString())) throw new Exception("Role not Set");
+
+            var streamerRoleId = ulong.Parse(streamerRoleIdRequest.Rows[0]["biValue"].ToString()!);
+            var discordRole = ctx.Guild.GetRole(streamerRoleId);
+            return discordRole;
         }
 
         [Command("stream.add")]
@@ -165,17 +150,19 @@ namespace TwitchTv.Module.Commands
         {
             var memberId = ctx.Member.Id;
             await ctx.Message.DeleteAsync();
-            if (da.CanAddStream(memberId, channel) > 0)
+            if (da.CanAddStream(channel,ctx.Guild.Id,ctx.Member.Id) > 0)
             {
                 await ctx.RespondAsync("Failed To Add Stream, Member or Stream Already Added");
                 return;
             }
-            da.AddStream(Uri.EscapeUriString(channel), memberId);
+            da.AddStream(Uri.EscapeUriString(channel), memberId,ctx.Guild.Id);
             await ctx.RespondAsync($"<@!{memberId}>, I will add you to the <#713084294490488933>");
-            await LogAction($"<@!{memberId}> has enabled Stream Announcements for https://twitch.tv/" + $"{channel}", ctx);
+            await TwitchTasks.LogAction($"<@!{memberId}> has enabled Stream Announcements for https://twitch.tv/" + $"{channel}", ctx.Client);
             if (!TwitchOptions.AutoAssignRoles) return;
-            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
-            await ctx.Member.GrantRoleAsync(StreamerRole);
+
+            var streamerRole = GetRoleFromId(ctx.Guild.Id, "StreamerRole", ctx);
+
+            await ctx.Member.GrantRoleAsync(streamerRole);
             
 
         }
@@ -186,9 +173,9 @@ namespace TwitchTv.Module.Commands
         {
             var memberId = ctx.Member.Id;
             await ctx.Message.DeleteAsync();
-            da.DeleteStream(memberId.ToString());
+            da.DeleteStream(memberId.ToString(), ctx.Guild.Id.ToString());
             await ctx.RespondAsync($"<@!{memberId}>, I will stop announcing your stream in <#713084294490488933>");
-            await LogAction($"<@!{memberId}> has removed Stream Announcements", ctx);
+            await TwitchTasks.LogAction($"<@!{memberId}> has removed Stream Announcements", ctx.Client);
             if (!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
@@ -196,7 +183,7 @@ namespace TwitchTv.Module.Commands
             var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
-            await LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx);
+            await TwitchTasks.LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx.Client);
 
         }
 
@@ -206,11 +193,11 @@ namespace TwitchTv.Module.Commands
         [RequireRoles(RoleCheckMode.Any, "TTVMod")]
         public async Task RemoveStream(CommandContext ctx, [Description("Mention the user to remove")]  string mention)
         {
-            var memberId = ParseMemberToId(mention);
+            var memberId = TwitchTasks.ParseMemberToId(mention);
             await ctx.Message.DeleteAsync();
-            da.DeleteStream(memberId.ToString());
+            da.DeleteStream(memberId.ToString(),ctx.Guild.Id.ToString());
             await ctx.RespondAsync($"Stream Removed For <@!{memberId}>");
-            await LogAction($"<@!{ctx.Member.Id}> has removed stream notifications for <@!{memberId}>", ctx);
+            await TwitchTasks.LogAction($"<@!{ctx.Member.Id}> has removed stream notifications for <@!{memberId}>", ctx.Client);
             if(!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
@@ -218,122 +205,32 @@ namespace TwitchTv.Module.Commands
             var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
-            await LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx);
+            await TwitchTasks.LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx.Client);
 
         }
 
-        public async Task LogAction(string message, CommandContext ctx)
+        [Command("ttv.setup")]
+        [Description("Configure Twitch Settings")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task SetupTask(CommandContext ctx, string setting, string value)
         {
-            DiscordChannel logChannel = await ctx.Client.GetChannelAsync(TwitchOptions.LogChannelId);
-            await logChannel.SendMessageAsync(message);
-        }
-
-
-        public bool IsMemberStillHere(ulong memberId, CommandContext ctx)
-        {
-            try
+            switch (setting)
             {
-                var member = ctx.Guild.GetMemberAsync(memberId).Result;
-                if (member == null) return false;
-                return true;
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Contains("Not found: 404"))
-                {
-                    var getInfo = ctx.Client.GetUserAsync(memberId).Result;
-                    LogAction($"{getInfo.Username} `{memberId}` no longer resides in The Cove, Will stop sending to <#713084294490488933>", ctx).ConfigureAwait(false);
-                    da.DeleteStream(memberId.ToString());
-                }
-                else
-                {
-                    Ttv.Logger.LogError(e.Message);
-                    LogAction($"Error Loading Member\n```{e}```", ctx).ConfigureAwait(false);
-                }
-                return false;
+                default:
+                    await ctx.RespondAsync("Invalid Setting Supplied");
+                    break;
+                case "StreamChannel":
+                case "VerifiedRole":
+                case "StreamerRole":
+                case "UlTest":
+                    await da.SetConfigInDb(ctx.Guild.Id, setting, biValue: ulong.Parse(value));
+                    await ctx.RespondAsync("Request Sent");
+                    break;
+                
             }
         }
 
-        private static ulong ParseMemberToId(string id)
-        {
-            var userId = id.Replace("<", "");
-            userId = userId.Replace(">", "");
-            userId = userId.Replace("@", "");
-            userId = userId.Replace("!", "");
 
-            ulong memberId = ulong.Parse(userId);
-            return memberId;
-        }
 
-        private async Task ScanChannels(CommandContext ctx, DiscordChannel channel)
-        {
-            while (bRunning)
-            {
-                Ttv.Logger.LogInformation("Start Cycle");
-                try
-                {
-                    var streams = da.GetStreamers();
-                    foreach (DataRow stream in streams.Rows)
-                    {
-                        try
-                        {
-                            var discordId = ulong.Parse(stream["discordId"].ToString());
-                            if (!IsMemberStillHere(discordId, ctx)) continue;
-                            var streamId = twitch.GetChannelId(stream["name"].ToString());
-                            if (!twitch.isOnline(streamId)) continue;
-                            var message = string.Empty;
-                            switch (stream["approved"].ToString())
-                            {
-                                case "1":
-                                {
-                                    message = $"🔴 Hey @here! <@!{discordId}> Is Live!";
-                                    break;
-                                }
-                                default:
-                                {
-                                    message = $"🔴 Hey All! <@!{discordId}> Is Live!";
-                                    break;
-                                }
-                            }
-
-                            try
-                            {
-                                var embed = twitch.BuildPromoEmbed(stream["name"].ToString());
-                                if (embed == null)
-                                {
-                                    throw new Exception("No Embed Created");
-                                }
-
-                                await channel.SendMessageAsync($"{message}", embed: embed);
-                                await LogAction($"{stream["name"]} has been promoted for <@!{discordId}> [{discordId}]",
-                                    ctx);
-                            }
-                            catch (Exception)
-                            {
-                                Ttv.Logger.LogInformation($"No Embed Created For {stream["name"]}, Will skip.");
-                                continue;
-                            }
-
-                            var now = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm");
-                            da.UpdateStream(stream["id"].ToString(), now);
-
-                        }
-                        catch (Exception e)
-                        {
-                            Ttv.Logger.LogCritical($"{e}");
-                            await LogAction($"TwitchTV Module encountered an error while scanning channel {stream["name"]} \n {e.Message}\n```{e}```", ctx);
-                            break;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                   Ttv.Logger.LogCritical($"{e}");
-                   await LogAction($"TwitchTV Module encountered an error in task `ScanChannels() ` \n {e.Message}\n```{e}```", ctx);
-                }
-
-                Thread.Sleep(TimeSpan.FromSeconds(30));
-            }
-        }
     }
 }

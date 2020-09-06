@@ -25,10 +25,8 @@ namespace TwitchTv.Module
         [Description("Role ID to assign to streamers who get @here mentions")]
         internal static ulong VerifiedRole { get; set; }
         
-        [Description("Discord Channel Id to send the message to")]
-        internal static ulong TargetChannelId { get; set; }
-
         [Description("Discord Channel Id to send logging messages to")]
         internal static ulong LogChannelId { get; set; }
+        
     }
 }

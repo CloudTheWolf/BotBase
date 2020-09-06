@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BotLogger;
 using BotShared.Interfaces;
 using DSharpPlus;
+using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using Microsoft.Extensions.Logging;
 using TwitchTv.Module.Commands;
@@ -32,6 +33,9 @@ namespace TwitchTv.Module
                 bot.Commands.RegisterCommands<TwitchCommands>();
                 Interactivity = bot.Interactivity;
                 logger.LogInformation($"{Name}: Registered {nameof(TwitchCommands)}!");
+                StartTwitchListener(bot);
+                logger.LogInformation("TwitchListener Set");
+
             }
             catch (Exception e)
             {
@@ -48,9 +52,17 @@ namespace TwitchTv.Module
             TwitchOptions.AutoAssignRoles = bool.Parse(_myConfig.twitch["AutoAssign"].ToString());
             TwitchOptions.AutoPurgeStreams = bool.Parse(_myConfig.twitch["AutoPurge"].ToString());
             TwitchOptions.StreamerRole = ulong.Parse(_myConfig.twitch["StreamerRole"].ToString());
-            TwitchOptions.VerifiedRole = ulong.Parse(_myConfig.twitch["VerifiedRole"].ToString());
-            TwitchOptions.TargetChannelId = ulong.Parse(_myConfig.twitch["StreamChannel"].ToString());
+            //TwitchOptions.VerifiedRole = ulong.Parse(_myConfig.twitch["VerifiedRole"].ToString());
+            //TwitchOptions.TargetChannelId = ulong.Parse(_myConfig.twitch["StreamChannel"].ToString());
             TwitchOptions.LogChannelId = ulong.Parse(_myConfig.twitch["LogChannel"].ToString());
+        }
+
+        private void StartTwitchListener(IBot bot)
+        {
+            if(!bool.Parse(_myConfig.twitch["autostart"].ToString())) return;
+            Logger.LogInformation("Auto-Start Twitch Channel Scan Enabled");
+            TwitchTasks.bRunning = true;
+            bot.Client.Ready += TwitchTasks.StartScanChannels;
         }
     }
 }

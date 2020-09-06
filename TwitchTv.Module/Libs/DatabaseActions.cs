@@ -1,27 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using BotLogger;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace TwitchTv.Module.Libs
 {
     class DatabaseActions
     {
         public static ILogger<Logger> DbLogger;
-        private static BotData.MySql coveSql;
+        private static BotData.MySql _mySql;
 
         internal DatabaseActions()
         {
             DbLogger = Ttv.Logger;
-            coveSql = new BotData.MySql(DbLogger);
+            _mySql = new BotData.MySql(DbLogger);
         }
 
-        internal DataTable GetStreamers()
+        internal async Task<DataTable> GetStreamers()
         {
             try
             {
-                return coveSql.RunDataTableQuery(
-                    "SELECT * FROM `streams` WHERE lastMessage < DATE_ADD(NOW(), INTERVAL -1 HOUR)");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
+                return await _mySql.RunProcedure("streams_GetStreams", args);
             }
             catch (Exception e)
             {
@@ -34,7 +40,12 @@ namespace TwitchTv.Module.Libs
         {
             try
             {
-                coveSql.RunDataTableQuery($"UPDATE `streams` SET lastMessage = '{timestamp}' WHERE `id` = {id}");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("timestamp", timestamp),
+                    new KeyValuePair<string, object>("id", id)
+                };
+                _mySql.RunProcedure("stream_updateTimeStamp", args);
             }
             catch (Exception e)
             {
@@ -42,11 +53,17 @@ namespace TwitchTv.Module.Libs
             }
         }
 
-        internal void DeleteStream(string user)
+        internal async void DeleteStream(string user, string guild)
         {
             try
             {
-                coveSql.RunDataTableQuery($"DELETE FROM `streams` WHERE `discordId` = {user}");
+                var args = new List<KeyValuePair<string, object>>()
+                {
+                    new KeyValuePair<string, object>("userid", user),
+                    new KeyValuePair<string, object>("guildId", guild),
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
+                await _mySql.RunProcedure("stream_DeleteStream", args);
             }
             catch (Exception e)
             {
@@ -54,14 +71,19 @@ namespace TwitchTv.Module.Libs
             }
         }
 
-        internal int CanAddStream(ulong user,string channelName)
+        internal int CanAddStream(string channelName, ulong guildId, ulong userid)
         {
             try
             {
+                var args = new List<KeyValuePair<string,object>>
+                {
+                    new KeyValuePair<string, object>("channel", channelName),
+                    new KeyValuePair<string, object>("guildId", guildId),
+                    new KeyValuePair<string, object>("userid", userid),
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
 
-
-                var dt = coveSql.RunDataTableQuery(
-                    $"SELECT * FROM `streams` WHERE name = '{channelName.ToLower()}' or `discordId`= {user}");
+                var dt = _mySql.RunProcedure("streams_GetStreamForChannelInGuild", args).Result;
                 return dt.Rows.Count;
             }
             catch (Exception e)
@@ -71,11 +93,21 @@ namespace TwitchTv.Module.Libs
             }
         }
 
-        internal void AddStream(string channelName, ulong user, int ping = 0)
+        internal void AddStream(string channelName, ulong user, ulong guildid, int ping = 0)
         {
             try
             {
-                coveSql.RunDataTableQuery($"INSERT INTO `streams`(`name`, `lastMessage`, `approved`, `discordId`) VALUES ('{channelName.ToLower()}','2000-01-01 00:00','{ping}','{user}')");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("channel", channelName),
+                    new KeyValuePair<string, object>("ping", ping),
+                    new KeyValuePair<string, object>("discordId", user),
+                    new KeyValuePair<string, object>("guildId", guildid),
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
+
+                _mySql.RunProcedure("streams_AddStream", args);
+
 
             }
             catch (Exception e)
@@ -84,11 +116,17 @@ namespace TwitchTv.Module.Libs
             }
         }
 
-        internal void UpgradeStream(ulong user)
+        internal void UpgradeStream(ulong user, ulong guildId, int ping)
         {
             try
             {
-                coveSql.RunDataTableQuery($"UPDATE `streams` SET `approved` = '1' WHERE `discordId` = {user}");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("userId", user),
+                    new KeyValuePair<string, object>("guildId", guildId),
+                    new KeyValuePair<string, object>("ping", ping)
+                };
+                _mySql.RunProcedure("streams_setPing", args);
             }
             catch (Exception e)
             {
@@ -96,35 +134,89 @@ namespace TwitchTv.Module.Libs
             }
         }
 
-        internal string GetAllStreams()
+        internal DataTable GetAllStreams(ulong guildId)
         {
-            var returnData = "";
+            
             try
             {
-                returnData = coveSql.RunJsonQuery($"SELECT `name` as 'Twitch', `discordId`, CASE WHEN approved = 0 THEN 'No' WHEN approved = 1 THEN 'Yes' END as '@here_Ping' FROM `streams`");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("guildId", guildId),
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
+                return _mySql.RunProcedure("streams_GetAllStreamsForGuild", args).Result;
             }
             catch (Exception e)
             {
                 Ttv.Logger.LogError($"{e.Message}");
+                return new DataTable();
             }
 
-            return returnData;
+            
         }
 
-        internal string GetLastStream()
+        internal DataTable GetLastStream(ulong guildId)
         {
-            var returnData = "";
+            
             try
             {
-                returnData = coveSql.RunJsonQuery($"SELECT `name` as 'Twitch', `discordId` FROM `streams` ORDER BY `lastMessage` desc LIMIT 1");
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("guildId", guildId),
+                    new KeyValuePair<string, object>("type", "twitch")
+                };
+                return _mySql.RunProcedure("streams_getLastAnnounce", args).Result;
                 
+
             }
             catch (Exception e)
             {
                 Ttv.Logger.LogError($"{e.Message}");
+                return new DataTable();
             }
+        }
 
-            return returnData;
+        internal DataTable GetSettingsForGuild(ulong guildId, string setting)
+        {
+            try
+            {
+                var args = new List<KeyValuePair<string, object>>
+                {
+                    new KeyValuePair<string, object>("guildId", guildId),
+                    new KeyValuePair<string, object>("module", "twitch"),
+                    new KeyValuePair<string, object>("setting", setting)
+                };
+                return _mySql.RunProcedure("settings_getSetting", args).Result;
+            }
+            catch (Exception e)
+            {
+                Ttv.Logger.LogError($"{e.Message}");
+                return new DataTable();
+            }
+        }
+
+        internal async Task SetConfigInDb(ulong guildId, string setting, int iValue = default, string sValue = "",
+            ulong biValue = default)
+        {
+            var args = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("guildId", guildId),
+                new KeyValuePair<string, object>("module", "twitch"),
+                new KeyValuePair<string, object>("setting", setting)
+            };
+
+            args.Add(iValue == default
+                ? new KeyValuePair<string, object>("iValue", DBNull.Value)
+                : new KeyValuePair<string, object>("iValue", iValue));
+
+            args.Add(sValue == string.Empty
+                ? new KeyValuePair<string, object>("sValue", DBNull.Value)
+                : new KeyValuePair<string, object>("sValue", sValue));
+
+            args.Add(biValue == default
+                ? new KeyValuePair<string, object>("biValue", DBNull.Value)
+                : new KeyValuePair<string, object>("biValue", biValue));
+            await _mySql.RunProcedure("settings_AddUpdate", args);
         }
     }
 }
