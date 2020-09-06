@@ -51,9 +51,6 @@ namespace TwitchTv.Module
             TwitchOptions.AccessToken = _myConfig.twitch["AccessToken"].ToString();
             TwitchOptions.AutoAssignRoles = bool.Parse(_myConfig.twitch["AutoAssign"].ToString());
             TwitchOptions.AutoPurgeStreams = bool.Parse(_myConfig.twitch["AutoPurge"].ToString());
-            TwitchOptions.StreamerRole = ulong.Parse(_myConfig.twitch["StreamerRole"].ToString());
-            //TwitchOptions.VerifiedRole = ulong.Parse(_myConfig.twitch["VerifiedRole"].ToString());
-            //TwitchOptions.TargetChannelId = ulong.Parse(_myConfig.twitch["StreamChannel"].ToString());
             TwitchOptions.LogChannelId = ulong.Parse(_myConfig.twitch["LogChannel"].ToString());
         }
 

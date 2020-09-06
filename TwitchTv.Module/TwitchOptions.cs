@@ -19,12 +19,6 @@ namespace TwitchTv.Module
         [Description("Purge Streams For Members who have left the server")]
         internal static bool AutoPurgeStreams { get; set; }
         
-        [Description("Role ID to assign to streamers")]
-        internal static ulong StreamerRole { get; set; }
-        
-        [Description("Role ID to assign to streamers who get @here mentions")]
-        internal static ulong VerifiedRole { get; set; }
-        
         [Description("Discord Channel Id to send logging messages to")]
         internal static ulong LogChannelId { get; set; }
         

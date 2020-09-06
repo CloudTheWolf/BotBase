@@ -179,8 +179,8 @@ namespace TwitchTv.Module.Commands
             if (!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
-            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
+            var StreamerRole = GetRoleFromId(ctx.Guild.Id, "StreamerRole", ctx);
+            var VerifiedStreamerRole = GetRoleFromId(ctx.Guild.Id, "VerifiedRole", ctx);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
             await TwitchTasks.LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx.Client);
@@ -201,8 +201,8 @@ namespace TwitchTv.Module.Commands
             if(!TwitchOptions.AutoAssignRoles) return;
 
             var member = await ctx.Guild.GetMemberAsync(memberId);
-            var StreamerRole = ctx.Guild.GetRole(TwitchOptions.StreamerRole);
-            var VerifiedStreamerRole = ctx.Guild.GetRole(TwitchOptions.VerifiedRole);
+            var StreamerRole = GetRoleFromId(ctx.Guild.Id, "StreamerRole", ctx);
+            var VerifiedStreamerRole = GetRoleFromId(ctx.Guild.Id, "VerifiedRole", ctx);
             await member.RevokeRoleAsync(VerifiedStreamerRole);
             await member.RevokeRoleAsync(StreamerRole);
             await TwitchTasks.LogAction($"Roles removed stream notifications for <@!{memberId}>", ctx.Client);
