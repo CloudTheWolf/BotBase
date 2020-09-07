@@ -180,8 +180,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `streams_GetStreams`(IN `type` VARCH
     READS SQL DATA
     DETERMINISTIC
 BEGIN
-	SELECT * FROM `streams`
-    WHERE lastMessage < DATE_ADD(NOW(), INTERVAL -1 HOUR)
+	SELECT `streams`.*, `settings`.`biValue` as `channelId` 
+    FROM `streams`, `settings`
+    WHERE `settings`.`guildId` = `streams`.`guildId`
+    AND `streams`.lastMessage < DATE_ADD(NOW(), INTERVAL -1 HOUR)
+    AND `settings`.`module` = 'twitch'
+    AND `settings`.`setting` = 'StreamChannel'
     AND `type` = type;
 END$$
 

@@ -34,7 +34,7 @@ namespace TwitchTv.Module.Libs
             var channelId = GetChannelId(channelName);
             Ttv.Logger.LogInformation($"ID is {channelId}");
             var durationOnline = api.V5.Streams.GetUptimeAsync(channelId).Result.Value;
-            if ((durationOnline.TotalMinutes < 1 || durationOnline.TotalMinutes > 10) && !manual) return null;
+            //if ((durationOnline.TotalMinutes < 1 || durationOnline.TotalMinutes > 10) && !manual) return null;
             var stream = api.V5.Streams.GetStreamByUserAsync(channelId).Result;
             var user = stream.Stream.Channel.DisplayName;
             var avatar = stream.Stream.Channel.Logo;

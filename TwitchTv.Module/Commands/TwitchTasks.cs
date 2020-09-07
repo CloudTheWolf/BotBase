@@ -110,8 +110,7 @@ namespace TwitchTv.Module.Commands
                                 {
                                     throw new Exception("No Embed Created");
                                 }
-
-                                var channel = GetChannelFromId(client, ulong.Parse(stream["guildId"].ToString()));
+                                var channel = GetChannelFromId(client, ulong.Parse(stream["channelId"].ToString()));
                                 await channel.SendMessageAsync($"{message}", embed: embed);
                                 await LogAction($"{stream["name"]} has been promoted for <@!{discordId}> [{discordId}]",
                                     client);
