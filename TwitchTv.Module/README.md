@@ -1,5 +1,10 @@
 # TwitchTv.Module
 
+## What's New
+
+In the latest version, multi-server support was added.
+This required moving some settings from the Config File to the Database 
+
 ## About
 
 By Request I have made the TwitchTV Notifications Module public.
@@ -24,7 +29,7 @@ Example:
 ## Pre-Reqs
 1. MySql Database Config [See Here For Details](https://github.com/CloudTheWolf/BotBase/blob/master/README.md)
 
-2. `streams` table in your database [Get Schema Demo Here](https://github.com/CloudTheWolf/BotBase/blob/master/Sql_Schema/MySql/Schema.Sql)
+2. `streams` and `settings` tables, along with all `streams_` and `settings_` procedures in your database [Get Schema Demo Here](https://github.com/CloudTheWolf/BotBase/tree/master/Sql_Schema/MySql)
 
 ## How to use
 
@@ -42,9 +47,12 @@ Example:
 			"AccessToken": "MyAccessToken",
 			"AutoAssign": true,
 			"AutoPurge": true,
-                        "StreamerRole": "StreamerRoleId",
-			"VerifiedRole": "VerifiedRoleId",
-                        "StreamChannel": "StreamChannelId",
 			"LogChannel": "LogChannelId"
 		}
 ```
+
+8. Create a role called `TTVMod` and assign this to yourself (And anyone you with to moderate stream announcements)
+9. Use the `ttv.setup` command with the following parameters to start using the bot
+`ttv.setup StreamChannel {{Discord Channel Id}}` - Set the channel for the streams to be pushed to.
+`ttv.setup StreamerRole {{Discord Role Id}}` - Set the role to assign to streamers.
+`ttv.setup VerifiedRole  {{Discord Role Id}}` - Set the Role for verified streamers. (Streamers who get `@here` mentions)
