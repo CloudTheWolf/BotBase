@@ -63,7 +63,7 @@ namespace TwitchTv.Module.Libs
                     new KeyValuePair<string, object>("guildId", guild),
                     new KeyValuePair<string, object>("type", "twitch")
                 };
-                await _mySql.RunProcedure("stream_DeleteStream", args);
+                await _mySql.RunProcedure("streams_DeleteStream", args);
             }
             catch (Exception e)
             {
