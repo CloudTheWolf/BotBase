@@ -74,6 +74,9 @@ namespace TwitchTv.Module.Commands
         {
             while (bRunning)
             {
+                ulong lastId = UInt64.MinValue;
+                ulong lastGuild = UInt64.MinValue;
+
                 Ttv.Logger.LogInformation("Start Cycle");
                 try
                 {
@@ -111,9 +114,15 @@ namespace TwitchTv.Module.Commands
                                     throw new Exception("No Embed Created");
                                 }
                                 var channel = GetChannelFromId(client, ulong.Parse(stream["channelId"].ToString()));
+
+                                if (channel.GuildId == lastGuild && discordId == lastId) continue;
+
                                 await channel.SendMessageAsync($"{message}", embed: embed);
                                 await LogAction($"{stream["name"]} has been promoted for <@!{discordId}> [{discordId}]",
                                     client);
+                                lastId = discordId;
+                                lastGuild = channel.GuildId;
+
                             }
                             catch (Exception)
                             {

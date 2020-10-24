@@ -19,12 +19,12 @@ namespace Level.Module.Libs
             var exp = LevelOptions.ExpPerMessage;
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("userid", member)
+                new KeyValuePair<string, object>("_userid", member)
             };
             if (voice)
             {
                 exp = expOverride;
-                args.Add(new KeyValuePair<string, object>("exp", exp.ToString(CultureInfo.InvariantCulture)));
+                args.Add(new KeyValuePair<string, object>("_exp", exp.ToString(CultureInfo.InvariantCulture)));
                 try
                 {
                     await mSql.RunProcedure("Levels_GiveVoiceExp", args);
@@ -41,7 +41,7 @@ namespace Level.Module.Libs
                 exp = expOverride;
             }
 
-            args.Add(new KeyValuePair<string, object>("exp", exp.ToString(CultureInfo.InvariantCulture)));
+            args.Add(new KeyValuePair<string, object>("_exp", exp.ToString(CultureInfo.InvariantCulture)));
             try
             {
                 await mSql.RunProcedure("Levels_GiveMsgExp", args);
@@ -58,11 +58,11 @@ namespace Level.Module.Libs
             var exp = LevelOptions.ExpPerMessage;
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("userid", member)
+                new KeyValuePair<string, object>("_userid", member)
             };
             if (voice)
             {
-                args.Add(new KeyValuePair<string, object>("exp", expOverride.ToString()));
+                args.Add(new KeyValuePair<string, object>("_exp", expOverride.ToString()));
                 try
                 {
                     await mSql.RunProcedure("Levels_RevokeVoiceExp", args);
@@ -79,7 +79,7 @@ namespace Level.Module.Libs
                 exp = expOverride;
             }
 
-            args.Add(new KeyValuePair<string, object>("exp", exp.ToString()));
+            args.Add(new KeyValuePair<string, object>("_exp", exp.ToString()));
             try
             {
                 await mSql.RunProcedure("Levels_RevokeMsgExp", args);
@@ -95,7 +95,7 @@ namespace Level.Module.Libs
         {
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("userid", member)
+                new KeyValuePair<string, object>("_userid", member)
             };
             try
             {
@@ -111,9 +111,9 @@ namespace Level.Module.Libs
         {
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("userid", member),
-                new KeyValuePair<string, object>("timeJoined", tStamp),
-                new KeyValuePair<string, object>("inVoice",Convert.ToInt32(inVoice))
+                new KeyValuePair<string, object>("_userid", member),
+                new KeyValuePair<string, object>("_timeJoined", tStamp),
+                new KeyValuePair<string, object>("_inVoice",Convert.ToInt32(inVoice))
             };
             try
             {
@@ -131,7 +131,7 @@ namespace Level.Module.Libs
             Console.WriteLine($"Get Member Exp For Member:{member}");
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("szUserId", member)
+                new KeyValuePair<string, object>("_szUserId", member)
             };
             var spName = voice ? "Level_GetUserVoiceStats" : "Level_GetUserStats";
             try

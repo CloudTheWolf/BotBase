@@ -58,14 +58,6 @@ namespace Level.Module.Commands
             await ctx.RespondAsync(embed: embed);
         }
 
-        [Command("reset_levels")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Resets EXP and Voice EXP")]
-        public async Task ResetUserLevels(CommandContext ctx, string id)
-        {
-            var user = await ctx.Client.GetUserAsync(ulong.Parse(id));
-            await ctx.RespondAsync($"Will Reset user EXP for {user.Username}[{id}]");
-            await DatabaseActions.ResetExp(id);
-        }
+        
     }
 }

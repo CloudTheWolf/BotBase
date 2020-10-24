@@ -25,7 +25,7 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
                 return await _mySql.RunProcedure("streams_GetStreams", args);
             }
@@ -42,8 +42,8 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("timestamp", timestamp),
-                    new KeyValuePair<string, object>("id", id)
+                    new KeyValuePair<string, object>("_timestamp", timestamp),
+                    new KeyValuePair<string, object>("_id", id)
                 };
                 _mySql.RunProcedure("stream_updateTimeStamp", args);
             }
@@ -59,9 +59,9 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>()
                 {
-                    new KeyValuePair<string, object>("userid", user),
-                    new KeyValuePair<string, object>("guildId", guild),
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_userid", user),
+                    new KeyValuePair<string, object>("_guildId", guild),
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
                 await _mySql.RunProcedure("streams_DeleteStream", args);
             }
@@ -77,10 +77,10 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string,object>>
                 {
-                    new KeyValuePair<string, object>("channel", channelName),
-                    new KeyValuePair<string, object>("guildId", guildId),
-                    new KeyValuePair<string, object>("userid", userid),
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_channel", channelName),
+                    new KeyValuePair<string, object>("_guildId", guildId),
+                    new KeyValuePair<string, object>("_userid", userid),
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
 
                 var dt = _mySql.RunProcedure("streams_GetStreamForChannelInGuild", args).Result;
@@ -99,11 +99,11 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("channel", channelName),
-                    new KeyValuePair<string, object>("ping", ping),
-                    new KeyValuePair<string, object>("discordId", user),
-                    new KeyValuePair<string, object>("guildId", guildid),
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_channel", channelName),
+                    new KeyValuePair<string, object>("_ping", ping),
+                    new KeyValuePair<string, object>("_discordId", user),
+                    new KeyValuePair<string, object>("_guildId", guildid),
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
 
                 _mySql.RunProcedure("streams_AddStream", args);
@@ -122,9 +122,9 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("userId", user),
-                    new KeyValuePair<string, object>("guildId", guildId),
-                    new KeyValuePair<string, object>("ping", ping)
+                    new KeyValuePair<string, object>("_userId", user),
+                    new KeyValuePair<string, object>("_guildId", guildId),
+                    new KeyValuePair<string, object>("_ping", ping)
                 };
                 _mySql.RunProcedure("streams_setPing", args);
             }
@@ -141,8 +141,8 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("guildId", guildId),
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_guildId", guildId),
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
                 return _mySql.RunProcedure("streams_GetAllStreamsForGuild", args).Result;
             }
@@ -162,8 +162,8 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("guildId", guildId),
-                    new KeyValuePair<string, object>("type", "twitch")
+                    new KeyValuePair<string, object>("_guildId", guildId),
+                    new KeyValuePair<string, object>("_type", "twitch")
                 };
                 return _mySql.RunProcedure("streams_getLastAnnounce", args).Result;
                 
@@ -182,9 +182,9 @@ namespace TwitchTv.Module.Libs
             {
                 var args = new List<KeyValuePair<string, object>>
                 {
-                    new KeyValuePair<string, object>("guildId", guildId),
-                    new KeyValuePair<string, object>("module", "twitch"),
-                    new KeyValuePair<string, object>("setting", setting)
+                    new KeyValuePair<string, object>("_guildId", guildId),
+                    new KeyValuePair<string, object>("_module", "twitch"),
+                    new KeyValuePair<string, object>("_setting", setting)
                 };
                 return _mySql.RunProcedure("settings_getSetting", args).Result;
             }
@@ -200,22 +200,22 @@ namespace TwitchTv.Module.Libs
         {
             var args = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("guildId", guildId),
-                new KeyValuePair<string, object>("module", "twitch"),
-                new KeyValuePair<string, object>("setting", setting)
+                new KeyValuePair<string, object>("_guildId", guildId),
+                new KeyValuePair<string, object>("_module", "twitch"),
+                new KeyValuePair<string, object>("_setting", setting)
             };
 
             args.Add(iValue == default
-                ? new KeyValuePair<string, object>("iValue", DBNull.Value)
-                : new KeyValuePair<string, object>("iValue", iValue));
+                ? new KeyValuePair<string, object>("_iValue", DBNull.Value)
+                : new KeyValuePair<string, object>("_iValue", iValue));
 
             args.Add(sValue == string.Empty
-                ? new KeyValuePair<string, object>("sValue", DBNull.Value)
-                : new KeyValuePair<string, object>("sValue", sValue));
+                ? new KeyValuePair<string, object>("_sValue", DBNull.Value)
+                : new KeyValuePair<string, object>("_sValue", sValue));
 
             args.Add(biValue == default
-                ? new KeyValuePair<string, object>("biValue", DBNull.Value)
-                : new KeyValuePair<string, object>("biValue", biValue));
+                ? new KeyValuePair<string, object>("_biValue", DBNull.Value)
+                : new KeyValuePair<string, object>("_biValue", biValue));
             await _mySql.RunProcedure("settings_AddUpdate", args);
         }
     }
