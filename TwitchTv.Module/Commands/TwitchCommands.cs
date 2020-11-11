@@ -156,7 +156,7 @@ namespace TwitchTv.Module.Commands
                 return;
             }
             da.AddStream(Uri.EscapeUriString(channel), memberId,ctx.Guild.Id);
-            await ctx.RespondAsync($"<@!{memberId}>, I will add you to the <#713084294490488933>");
+            await ctx.RespondAsync($"<@!{memberId}>, I will add you to the Stream Notifications Channel");
             await TwitchTasks.LogAction($"<@!{memberId}> has enabled Stream Announcements for https://twitch.tv/" + $"{channel}", ctx.Client);
             if (!TwitchOptions.AutoAssignRoles) return;
 
@@ -174,7 +174,7 @@ namespace TwitchTv.Module.Commands
             var memberId = ctx.Member.Id;
             await ctx.Message.DeleteAsync();
             da.DeleteStream(memberId.ToString(), ctx.Guild.Id.ToString());
-            await ctx.RespondAsync($"<@!{memberId}>, I will stop announcing your stream in <#713084294490488933>");
+            await ctx.RespondAsync($"<@!{memberId}>, I will stop announcing your stream in Stream Notifications Channel");
             await TwitchTasks.LogAction($"<@!{memberId}> has removed Stream Announcements", ctx.Client);
             if (!TwitchOptions.AutoAssignRoles) return;
 
