@@ -12,11 +12,11 @@
 
   <ItemGroup>
     <PackageReference Include="ctw.BotData" Version="1.0.2.3" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.5" />
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00712" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00712" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00712" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-nightly-00712" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.6" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-rc1" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-rc1" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-rc1" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-rc1" />
   </ItemGroup>
 
 </Project>

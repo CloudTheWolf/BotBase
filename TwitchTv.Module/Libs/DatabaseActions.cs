@@ -31,7 +31,7 @@ namespace TwitchTv.Module.Libs
             }
             catch (Exception e)
             {
-                Ttv.Logger.LogError($"{e.Message}");
+                Ttv.Logger.LogError($"SQL Error:{e.Message}\n{e}");
                 return new DataTable();
             }
         }

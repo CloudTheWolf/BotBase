@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,10 +13,10 @@
 
   <ItemGroup>
     <PackageReference Include="ctw.BotData" Version="1.0.2.3" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.5" />
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00712" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00712" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.0" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.6" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-rc1" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-rc1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.8" />
     <PackageReference Include="TwitchLib" Version="3.1.1" />
   </ItemGroup>
 

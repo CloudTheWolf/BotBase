@@ -38,7 +38,6 @@ namespace Level.Module
             bot.Client.MessageCreated += LevelTasks.LevelsClient_MessageCreated;
             bot.Client.MessageDeleted += LevelTasks.LevelsClient_MessageDeleted;
             bot.Client.VoiceStateUpdated += LevelTasks.LevelsClient_VoiceStateUpdated;
-            bot.Client.GuildBanAdded += LevelTasks.LevelClient_BanUser;
             logger.LogInformation($"{Name}: Loaded LevelsClient_MessageCreated!");
 
 

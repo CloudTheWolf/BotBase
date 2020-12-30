@@ -64,9 +64,9 @@ namespace TwitchTv.Module.Commands
             return memberId;
         }
 
-        internal static async Task StartScanChannels(ReadyEventArgs readyEventArgs)
+        internal static async Task StartScanChannels(DiscordClient sender, ReadyEventArgs readyEventArgs)
         {
-            Task scanner = new Task(() => ScanChannels(readyEventArgs.Client));
+            Task scanner = new Task(() => ScanChannels(sender));
             scanner.Start();
         }
 
@@ -74,8 +74,8 @@ namespace TwitchTv.Module.Commands
         {
             while (bRunning)
             {
-                ulong lastId = UInt64.MinValue;
-                ulong lastGuild = UInt64.MinValue;
+                var lastId = ulong.MinValue;
+                var lastGuild = ulong.MinValue;
 
                 Ttv.Logger.LogInformation("Start Cycle");
                 try
@@ -90,7 +90,7 @@ namespace TwitchTv.Module.Commands
                                 false).Result;
                             if (!IsMemberStillHere(discordId, client,guild)) continue;
                             var streamId = twitch.GetChannelId(stream["name"].ToString());
-                            if (!twitch.IsOnline(streamId)) continue;
+                            if (!string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;
                             var message = string.Empty;
                             switch (stream["approved"].ToString())
                             {

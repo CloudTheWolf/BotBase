@@ -1,4 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
 using Microsoft.Extensions.Logging;
 using TwitchLib.Api;
 using DiscordEmbed = TwitchTv.Module.Libs.DiscordEmbed;
@@ -64,11 +66,16 @@ namespace TwitchTv.Module.Libs
 
         public string GetChannelId(string channelName)
         {
-            var channels = api.V5.Users.GetUserByNameAsync(channelName);
-            return channels.Result.Matches[0].Id;
-
-
-
+            try
+            {
+                var channels = api.V5.Users.GetUserByNameAsync(channelName);
+                return channels.Result.Matches[0].Id;
+            }
+            catch (TwitchLib.Api.Core.Exceptions.BadRequestException e)
+            {
+                Ttv.Logger.LogError($"Scan Error: {e}");
+                return string.Empty;
+            }
         }
 
         

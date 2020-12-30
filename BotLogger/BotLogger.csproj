@@ -12,6 +12,7 @@
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <Description>Log Handler for ctw.BotBase</Description>
     <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,8 @@ namespace BotLogger
     public class Logger
     {
 
+        public static ILoggerFactory BotLoggerFactory;
+
         public static ILogger<Logger> ConsoleLogger;
 
         public Logger(ILogger<Logger> logger)

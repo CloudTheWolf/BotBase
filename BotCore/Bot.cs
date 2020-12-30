@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +14,11 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.VoiceNext;
+using Emzi0767.Utilities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using LogLevel = DSharpPlus.LogLevel;
 
 namespace BotCore
 {
@@ -42,6 +45,7 @@ namespace BotCore
             CreateDiscordClient();
             CreateClientCommandConfiguration();
             InitPlugins();
+            ListAllCommands();
             await Client.ConnectAsync();
             
             
@@ -112,12 +116,30 @@ namespace BotCore
                 Token = _myConfig["token"].ToString(),
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
-                LogLevel = LogLevel.Debug,
-                UseInternalLogHandler = true
+                LoggerFactory = BotLogger.Logger.BotLoggerFactory,
+                
             };
         }
 
-        private static Task OnClientReady(ReadyEventArgs e)
+        private void ListAllCommands()
+        {
+            Console.WriteLine("Getting Commands");
+            Console.WriteLine("============");
+            foreach (var registeredCommand in Client.GetCommandsNext().RegisteredCommands)
+            {
+                Console.WriteLine($"Command: {registeredCommand.Value.Name} \nDesc: {registeredCommand.Value.Description} \nRoles:");
+                foreach (var keyValuePair in registeredCommand.Value.Overloads.ToImmutableArray())
+                {
+                    foreach (var args in keyValuePair.Arguments)
+                    {
+                        Console.WriteLine($"> Name: {args.Name}\n> Desc: {args.Description}");
+                    }
+                }
+                Console.WriteLine("============");
+            }
+        }
+
+        private static Task OnClientReady(DiscordClient sender, ReadyEventArgs readyEventArgs)
         {
             Logger.LogInformation($"Bot Ready With Prefix [{_myConfig["prefix"]}]");
             return Task.CompletedTask;
