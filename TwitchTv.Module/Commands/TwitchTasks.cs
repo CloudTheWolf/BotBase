@@ -85,9 +85,11 @@ namespace TwitchTv.Module.Commands
                     {
                         try
                         {
+                            
                             var discordId = ulong.Parse(stream["discordId"].ToString());
                             var guild = client.GetGuildAsync(ulong.Parse(stream["guildId"].ToString()),
                                 false).Result;
+                            Ttv.Logger.LogInformation($"Checking {stream["name"]} in {guild.Name}");
                             if (!IsMemberStillHere(discordId, client,guild)) continue;
                             var streamId = twitch.GetChannelId(stream["name"].ToString());
                             if (!string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;
