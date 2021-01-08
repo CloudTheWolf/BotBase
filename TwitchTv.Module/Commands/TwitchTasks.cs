@@ -92,7 +92,7 @@ namespace TwitchTv.Module.Commands
                             Ttv.Logger.LogInformation($"Checking {stream["name"]} in {guild.Name}");
                             if (!IsMemberStillHere(discordId, client,guild)) continue;
                             var streamId = twitch.GetChannelId(stream["name"].ToString());
-                            if (!string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;
+                            if (string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;
                             var message = string.Empty;
                             switch (stream["approved"].ToString())
                             {

@@ -24,7 +24,11 @@ namespace TwitchTv.Module.Libs
         {
             var uptime = api.V5.Streams.GetUptimeAsync(channelId).Result;
             var channel = api.V5.Channels.GetChannelByIDAsync(channelId).Result;
-            if (uptime != null) return true;
+            if (uptime != null)
+            {
+                Ttv.Logger.LogInformation($"{channel.DisplayName} is online");
+                return true;
+            }
             Ttv.Logger.LogInformation($"{channel.DisplayName} is offline");
             return false;
         }
