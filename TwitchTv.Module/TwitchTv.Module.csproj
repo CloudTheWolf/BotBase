@@ -4,7 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	  <AssemblyVersion>1.0.1.0</AssemblyVersion>
+	  <AssemblyVersion>1.0.2.0</AssemblyVersion>
+	  <Version>1.0.1</Version>
+	  <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
