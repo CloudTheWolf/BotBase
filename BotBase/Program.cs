@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace BotBase
-{ 
+{
     public class Program
     {
         public static void Main(string[] args)
