@@ -89,7 +89,7 @@ namespace TwitchTv.Module.Commands
                             var discordId = ulong.Parse(stream["discordId"].ToString());
                             var guild = client.GetGuildAsync(ulong.Parse(stream["guildId"].ToString()),
                                 false).Result;
-                            Ttv.Logger.LogInformation($"Checking {stream["name"]} in {guild.Name}");
+                            Ttv.Logger.LogDebug($"Checking {stream["name"]} in {guild.Name}");
                             if (!IsMemberStillHere(discordId, client,guild)) continue;
                             var streamId = twitch.GetChannelId(stream["name"].ToString());
                             if (string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;
@@ -123,7 +123,7 @@ namespace TwitchTv.Module.Commands
                                 await LogAction($"{stream["name"]} has been promoted for <@!{discordId}> [{discordId}]",
                                     client);
                                 lastId = discordId;
-                                lastGuild = channel.GuildId;
+                                lastGuild = channel.GuildId.Value;
 
                             }
                             catch (Exception)

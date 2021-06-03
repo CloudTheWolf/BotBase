@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DiscordEmbed = TwitchTv.Module.Libs.DiscordEmbed;
-
+using System.Collections.Generic;
 
 namespace TwitchTv.Module.Commands
 {
@@ -30,8 +30,18 @@ namespace TwitchTv.Module.Commands
             await ctx.Message.DeleteAsync();
             var data = da.GetAllStreams(ctx.Guild.Id);
             File.WriteAllText("Members.json", JsonConvert.SerializeObject(JArray.FromObject(data)));
+            var dmChannel = await ctx.Member.CreateDmChannelAsync().ConfigureAwait(false);
 
-            await ctx.Member.SendFileAsync("Members.json", "Roles Attached");
+            using (var fs = new FileStream("Members.json", FileMode.Open, FileAccess.Read))
+            {
+                var msg = await new DiscordMessageBuilder()
+                    .WithContent("All Streams Attached")
+                    .WithFiles(new Dictionary<string, Stream>() { { "Members.json", fs } })
+                    .SendAsync(ctx.Channel);
+            }
+
+            
+
         }
 
         [Command("bot.status")]

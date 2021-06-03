@@ -29,7 +29,7 @@ namespace TwitchTv.Module.Libs
                 Ttv.Logger.LogInformation($"{channel.DisplayName} is online");
                 return true;
             }
-            Ttv.Logger.LogInformation($"{channel.DisplayName} is offline");
+            Ttv.Logger.LogDebug($"{channel.DisplayName} is offline");
             return false;
         }
 

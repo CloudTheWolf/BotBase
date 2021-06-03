@@ -55,7 +55,7 @@ namespace Level.Module.Commands
             var avatar = ctx.Member.AvatarUrl;
             if (user.Rows[0]["badgeImageUrl"] != DBNull.Value) avatar = user.Rows[0]["badgeImageUrl"].ToString();
             DiscordEmbed embed = LevelTasks.BuildEmbedTask("Voice Exp!", "Levels!", ctx.Guild.IconUrl, args, avatar);
-            await ctx.RespondAsync(embed: embed);
+            await ctx.RespondAsync(embed: embed);            
         }
 
         

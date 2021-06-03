@@ -7,16 +7,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>E:\GitHub\BotBase\BotBase\bin\Release\netcoreapp3.1\win10-x64\Plugins\</OutputPath>
+    <OutputPath></OutputPath>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotData" Version="1.0.2.3" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.6" />
-    <PackageReference Include="DSharpPlus" Version="4.0.0-rc1" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-rc1" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-rc1" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-rc1" />
+    <PackageReference Include="ctw.BotData" Version="1.0.3" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.8.4-beta" />
+    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00875" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00875" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00875" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00875" />
   </ItemGroup>
 
 </Project>
