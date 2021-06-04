@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.3.4</AssemblyVersion>
-    <FileVersion>1.0.3.4</FileVersion>
-    <Version>1.0.3.4-beta</Version>
+    <AssemblyVersion>1.0.3.6</AssemblyVersion>
+    <FileVersion>1.0.3.6</FileVersion>
+    <Version>1.0.3.6-beta</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -22,7 +22,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>1</WarningLevel>
-    <OutputPath>E:\GitHub\BotBase\BotBase\bin\Release\netcoreapp3.1\win10-x64</OutputPath>
+    <OutputPath></OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
@@ -35,12 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotShared" Version="1.0.8.4-beta" />
-    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00875" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00875" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00875" />
-    <PackageReference Include="DSharpPlus.Rest" Version="4.1.0-nightly-00875" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00875" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.8.5-beta" />
+    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00876" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="ctw.BotLogger" Version="1.0.2" />
   </ItemGroup>

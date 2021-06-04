@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 
 namespace Level.Module.Commands
-{
+{ 
     public class LevelTasks
     {
         public static async Task LevelsClient_MessageCreated(DiscordClient sender, MessageCreateEventArgs messageCreateEventArgs)

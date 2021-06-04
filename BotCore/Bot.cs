@@ -116,6 +116,7 @@ namespace BotCore
                 Token = _myConfig["token"].ToString(),
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
+                Intents = DiscordIntents.All,
                 LoggerFactory = BotLogger.Logger.BotLoggerFactory,
                 
             };
