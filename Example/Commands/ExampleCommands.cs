@@ -1,9 +1,11 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 
 
@@ -34,8 +36,11 @@ namespace Example.Module.Commands
             }
 
             File.WriteAllText("Roles.txt", roleList);
-
-            await ctx.Member.SendFileAsync("Roles.txt", "Roles Attached");
+            using (var fs = new FileStream("Roles.txt", FileMode.Open, FileAccess.Read))
+            {
+                var message = new DiscordMessageBuilder().WithContent("Roles Attached").WithFiles(new Dictionary<string, Stream>() { { "Roles.txt", fs } });
+                await ctx.Member.SendMessageAsync(message);
+            }            
         }
     }
 }
