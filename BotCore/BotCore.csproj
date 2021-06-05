@@ -5,19 +5,20 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
-    <AssemblyVersion>1.0.3.6</AssemblyVersion>
-    <FileVersion>1.0.3.6</FileVersion>
-    <Version>1.0.3.6-beta</Version>
+    <AssemblyVersion>1.0.3.7</AssemblyVersion>
+    <FileVersion>1.0.3.7</FileVersion>
+    <Version>1.0.3.7-beta</Version>
     <AssemblyName>ctw.BotCore</AssemblyName>
     <Product>BotCore</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
-    <Description>Core Bot Classes.</Description>
+    <Description>Core Bot Classes for creating a bot using DSharpPlus</Description>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
+    <Copyright>© 2021 CloudTheWolf Ltd</Copyright>
     <PackageProjectUrl>https://github.com/CloudTheWolf/BotBase</PackageProjectUrl>
+    <PackageIcon>CTWBot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -32,17 +33,21 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <None Include="..\CTWBot.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotShared" Version="1.0.8.5-beta" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.8.6-beta" />
     <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.Rest" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00876" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="ctw.BotLogger" Version="1.0.2" />
+    <PackageReference Include="ctw.BotLogger" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

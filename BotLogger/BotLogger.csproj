@@ -6,15 +6,18 @@
     <Authors>Michael Howard</Authors>
     <Company>CloudTheWolf Ltd</Company>
     <PackageId>ctw.BotLogger</PackageId>
-    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
+    <Copyright>© 2021 CloudTheWolf Ltd</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <Description>Log Handler for ctw.BotBase</Description>
     <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <PackageReleaseNotes>Updated Dependancies</PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <PackageReleaseNotes>Icon Added</PackageReleaseNotes>
+    <PackageIcon>CTWBot.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/CloudTheWolf/BotBase</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\CTWBot.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

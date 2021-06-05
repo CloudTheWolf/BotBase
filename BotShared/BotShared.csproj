@@ -7,19 +7,21 @@
     <Company>CloudTheWolf Ltd</Company>
     <RepositoryUrl>https://github.com/CloudTheWolf/BotBase</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Copyright>&amp;copy; 2020 CloudTheWolf Ltd</Copyright>
-    <Description>Shared Interfaces For BotBase Application</Description>
+    <Copyright>© 2021 CloudTheWolf Ltd</Copyright>
+    <Description>Shared Interfaces For BotBase Application powered by DSharpPlus</Description>
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.8.5</AssemblyVersion>
-    <FileVersion>1.0.8.5</FileVersion>
-    <Version>1.0.8.5-beta</Version>
+    <AssemblyVersion>1.0.8.6</AssemblyVersion>
+    <FileVersion>1.0.8.6</FileVersion>
+    <Version>1.0.8.6-beta</Version>
     <PackageReleaseNotes>Updated NuGet Nuget Dependencies.</PackageReleaseNotes>
+    <PackageIcon>CTWBot.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotLogger" Version="1.0.2" />
+    <PackageReference Include="ctw.BotLogger" Version="1.0.3" />
     <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00876" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00876" />
@@ -30,6 +32,10 @@
 
   <ItemGroup>
     <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\CTWBot.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
