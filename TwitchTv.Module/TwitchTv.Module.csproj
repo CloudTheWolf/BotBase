@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="ctw.BotData" Version="1.0.4" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.8.7-beta" />
+    <PackageReference Include="ctw.BotShared" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageReference Include="TwitchLib" Version="3.2.0" />
   </ItemGroup>
