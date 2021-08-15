@@ -15,6 +15,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.Lavalink;
 using DSharpPlus.VoiceNext;
 using Emzi0767.Utilities;
 using Microsoft.Extensions.Logging;
@@ -29,6 +30,8 @@ namespace BotCore
         public DiscordRestClient Rest { get; set; }
         public CommandsNextExtension Commands { get; set; }
         public InteractivityExtension Interactivity { get; set; }
+        public LavalinkConfiguration LvalinkConfig { get; set; }
+
         private static DiscordConfiguration _config;
         private static dynamic _myConfig;
         private static readonly PluginLoader PluginLoader = new PluginLoader();
@@ -100,7 +103,7 @@ namespace BotCore
         private void CreateDiscordClient()
         {
             Client = new DiscordClient(_config);
-
+            Interactivity = Client.GetInteractivity();
             Client.Ready += OnClientReady;
 
             Client.UseInteractivity(new InteractivityConfiguration

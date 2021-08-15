@@ -221,9 +221,10 @@ namespace TwitchTv.Module.Commands
 
         [Command("ttv.setup")]
         [Description("Configure Twitch Settings")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task SetupTask(CommandContext ctx, string setting, string value)
+        //[RequirePermissions(Permissions.Administrator)]
+        public async Task SetupTask(CommandContext ctx, string setting = null, string value = null)
         {
+            if (ctx.Member.Id != 126060427250630656) return;
             switch (setting)
             {
                 default:

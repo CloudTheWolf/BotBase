@@ -64,9 +64,13 @@ namespace TwitchTv.Module.Commands
             return memberId;
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal static async Task StartScanChannels(DiscordClient sender, ReadyEventArgs readyEventArgs)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             Task scanner = new Task(() => ScanChannels(sender));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             scanner.Start();
         }
 
@@ -85,11 +89,11 @@ namespace TwitchTv.Module.Commands
                     {
                         try
                         {
-                            
+
                             var discordId = ulong.Parse(stream["discordId"].ToString());
                             var guild = client.GetGuildAsync(ulong.Parse(stream["guildId"].ToString()),
                                 false).Result;
-                            Ttv.Logger.LogDebug($"Checking {stream["name"]} in {guild.Name}");
+                            Console.WriteLine($"Checking {stream["name"]} in {guild.Name}");
                             if (!IsMemberStillHere(discordId, client,guild)) continue;
                             var streamId = twitch.GetChannelId(stream["name"].ToString());
                             if (string.IsNullOrEmpty(streamId) || !twitch.IsOnline(streamId)) continue;

@@ -13,11 +13,15 @@
 
   <ItemGroup>
     <PackageReference Include="ctw.BotData" Version="1.0.4" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.8.6-beta" />
-    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.8.7-beta" />
+    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00879" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00879" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00879" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00879" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(TargetDir)*&quot; &quot;G:\BotBase\Plugins\&quot; /S /Y" />
+  </Target>
 
 </Project>

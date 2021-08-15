@@ -103,7 +103,9 @@ namespace BotData
         }
 
         [Description("Run a stored procedure and return as a Data Table")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<DataTable> RunProcedure(string procedure, List<KeyValuePair<string, object>> arguments)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             try
             {

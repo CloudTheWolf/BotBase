@@ -35,7 +35,9 @@ namespace BotData
         }
 
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task<DataTable> RunStoredProcedureAsync(string procedure,
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             List<KeyValuePair<string, object>> arguments)
         {
             try

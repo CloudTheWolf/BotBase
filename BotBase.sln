@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29424.173
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotCore", "BotCore\BotCore.csproj", "{2103293B-8A01-496B-B1EB-3CD3DD9C31F7}"
 EndProject
@@ -22,10 +22,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotShared", "BotShared\BotShared.csproj", "{77C91399-8C64-474F-B80C-CB9946E99857}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B84020E8-6BEA-4C80-BA96-1E6C8E8D9E0B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitchTv.Module", "TwitchTv.Module\TwitchTv.Module.csproj", "{BA364AC6-C5B5-478C-8103-1E134543961E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level.Module", "Level.Module\Level.Module.csproj", "{C33D98C6-ED0B-4BD2-AB4D-3F09629C3AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Level.Module", "Level.Module\Level.Module.csproj", "{C33D98C6-ED0B-4BD2-AB4D-3F09629C3AC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhoDat.Module", "WhoDat.Module\WhoDat.Module.csproj", "{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +138,18 @@ Global
 		{C33D98C6-ED0B-4BD2-AB4D-3F09629C3AC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C33D98C6-ED0B-4BD2-AB4D-3F09629C3AC0}.Release|x86.ActiveCfg = Release|Any CPU
 		{C33D98C6-ED0B-4BD2-AB4D-3F09629C3AC0}.Release|x86.Build.0 = Release|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Debug|x86.Build.0 = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.linux-x86|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.linux-x86|Any CPU.Build.0 = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.linux-x86|x86.ActiveCfg = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.linux-x86|x86.Build.0 = Debug|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Release|x86.ActiveCfg = Release|Any CPU
+		{CE4C1489-D73A-4A72-9C89-9997E0A1F04A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

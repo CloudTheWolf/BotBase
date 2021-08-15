@@ -12,9 +12,9 @@
     <PackageTags>Discord, DSharpPlus,ctw</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.8.6</AssemblyVersion>
-    <FileVersion>1.0.8.6</FileVersion>
-    <Version>1.0.8.6-beta</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0.0</Version>
     <PackageReleaseNotes>Updated NuGet Nuget Dependencies.</PackageReleaseNotes>
     <PackageIcon>CTWBot.png</PackageIcon>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -22,11 +22,12 @@
 
   <ItemGroup>
     <PackageReference Include="ctw.BotLogger" Version="1.0.3" />
-    <PackageReference Include="DSharpPlus" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.Rest" Version="4.1.0-nightly-00876" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00876" />
+    <PackageReference Include="DSharpPlus" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.Rest" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
 

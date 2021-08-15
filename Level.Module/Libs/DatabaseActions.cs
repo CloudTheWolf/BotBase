@@ -126,7 +126,9 @@ namespace Level.Module.Libs
 
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal static async Task<DataTable> GetUserExp(ulong member,bool voice = false)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             Console.WriteLine($"Get Member Exp For Member:{member}");
             var args = new List<KeyValuePair<string, object>>

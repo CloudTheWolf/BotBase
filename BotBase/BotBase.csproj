@@ -25,8 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ctw.BotCore" Version="1.0.3.7-beta" />
-    <PackageReference Include="ctw.BotShared" Version="1.0.8.6-beta" />
+    <PackageReference Include="ctw.BotCore" Version="1.0.3.8-beta" />
+    <PackageReference Include="ctw.BotShared" Version="1.0.8.7-beta" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.24.1" />
+    <PackageReference Include="Magick.NET.Core" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
@@ -51,4 +53,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(TargetDir)*&quot; &quot;G:\BotBase\&quot; /S /Y" />
+  </Target>
 </Project>
