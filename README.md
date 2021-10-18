@@ -1,7 +1,8 @@
+# This has been replaced by [CloudTheWolf.DSharpPlus.Scaffolding](https://github.com/CloudTheWolf/CloudTheWolf.DSharpPlus.Scaffolding)
+![Logo of CloudTheWolf.DSharpPlus.Scaffolding](https://github.com/CloudTheWolf/CloudTheWolf.DSharpPlus.Scaffolding/raw/main/banner.png)
+
 # BotBase
-
-![CodeNotary](https://github.com/CloudTheWolf/BotBase/workflows/CodeNotary/badge.svg) ![CodeQL](https://github.com/CloudTheWolf/BotBase/workflows/CodeQL/badge.svg)
-
+THIS PROJECT IS NOW ABANDONED
 Bot Base is a basic wrapper / framework for DSharp+ https://github.com/DSharpPlus/DSharpPlus
 
 This project was created as a base for getting started, and has no affiliation with DShap+.
